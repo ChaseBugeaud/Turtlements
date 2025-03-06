@@ -27,7 +27,7 @@ export class Game {
   }
 
   //Setters
-  public setWinner(winner: Contestant): void {
+  public overrideWinner(winner: Contestant): void {
     this.winner = winner;
   }
 

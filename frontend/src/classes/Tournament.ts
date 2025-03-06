@@ -88,6 +88,7 @@ export class Tournament {
     this.prize = prize;
   }
 
+  //TODO: implement other functions
   //Other functions
 }
 
