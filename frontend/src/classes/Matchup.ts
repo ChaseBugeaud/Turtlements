@@ -1,7 +1,7 @@
 import { Contestant } from "./Contestant";
 import { Game } from "./Game";
 
-export class matchup {
+export class Matchup {
   private bestOfCount: number;
   private contestant1: Contestant;
   private contestant2?: Contestant;
