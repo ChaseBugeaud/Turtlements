@@ -4,13 +4,17 @@
   "description": "Backend for Turtlements",
   "license": "ISC",
   "author": "Syntax Sorcerers",
-  "type": "commonjs",
+  "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "dependencies": {
     "@types/express": "^5.0.0",
     "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "chai": "^5.2.0",
+    "mocha": "^11.1.0"
   }
 }
