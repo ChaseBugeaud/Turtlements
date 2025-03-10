@@ -1,0 +1,5 @@
+PG_USER=postgres
+PG_PASS=tourneytheturtle
+PG_HOST=turtlements.c5q64agwmxue.ca-central-1.rds.amazonaws.com
+PG_PORT=5432
+PG_DATABASE=turtlementsDB
