@@ -1,0 +1,11 @@
+{
+  "devDependencies": {
+    "mocha": "^11.1.0"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "dependencies": {
+    "pg-promise": "^11.10.2"
+  }
+}
