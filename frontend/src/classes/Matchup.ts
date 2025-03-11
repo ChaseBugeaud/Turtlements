@@ -7,6 +7,8 @@ export class Matchup {
   private contestant2?: Contestant;
   private games: Game[];
   private winner?: Contestant;
+  private left: Contestant;
+  private right: Contestant;
 
   constructor(bestOfCount: number, contestant1: Contestant, contestant2?: Contestant) {
     this.contestant1 = contestant1;
