@@ -1,0 +1,36 @@
+body {
+	background-color:#49614D !important;
+	padding:50px;
+}
+
+/*Style for Page-Title*/
+#pageTitle {
+	text-align:center;
+	margin:50px;
+}
+#pageTitle h1 {
+	font-size:40px;
+}
+#pageTitle p {
+	font-size:18px;
+	color:#8B0000;
+}
+
+/*Style for Section-Headers*/
+#tdHeader, #spHeader, #cdHeader {
+	background-color:#9D9765; 
+	padding:10px; 
+	margin-bottom:0px;
+}
+
+/*Style for Section-Forms*/
+#tdForm, #spForm, #cdForm {
+	background-color:#B0B9A8;
+	border-style:double;
+	border-color:#9D9765;
+}
+
+.row {
+	padding:15px !important;
+	display: flex;
+}
