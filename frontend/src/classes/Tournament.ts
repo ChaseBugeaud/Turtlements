@@ -7,6 +7,7 @@ export class Tournament {
   private startDate: Date;
   private endDate?: Date;
   private matchups: Matchup[];
+  private bracket: Matchup[][];
   private prize?: string | number;
 
   constructor(
@@ -27,7 +28,8 @@ export class Tournament {
     if (prize) {
       this.prize = prize;
     }
-    this.matchups = []; //TODO: create matchup bracket
+    this.matchups = [];
+    this.bracket = [];
   }
 
   //Getters
@@ -59,6 +61,10 @@ export class Tournament {
     return this.prize!;
   }
 
+  public getBracket(): Matchup[][] {
+    return this.bracket;
+  }
+
   //Setters
   public setName(name: string): void {
     this.name = name;
@@ -87,6 +93,11 @@ export class Tournament {
   public setPrize(prize: string | number | undefined): void {
     this.prize = prize;
   }
+
+  public setBracket(bracket: Matchup[][]) {
+    this.bracket = bracket;
+  }
+
 
   //TODO: implement other functions
   //Other functions
