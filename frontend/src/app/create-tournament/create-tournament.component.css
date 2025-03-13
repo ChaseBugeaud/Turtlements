@@ -29,6 +29,9 @@ body {
 	border-style:double;
 	border-color:#9D9765;
 }
+label {
+	margin-right:15px;
+}
 
 .row {
 	padding:15px !important;
