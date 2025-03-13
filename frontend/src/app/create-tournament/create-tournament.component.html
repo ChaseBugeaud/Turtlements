@@ -1,1 +1,187 @@
-<p>create-tournament works!</p>
+<html>
+	<head>
+		<link href="create-tournament.component.css"
+              rel="stylesheet">
+		<!--BootStrap Icons Library-->
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
+              rel="stylesheet">
+		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+              rel="stylesheet">
+	</head>
+	<body>
+		<div id="pageTitle">
+			<h1>NEW TOURNAMENT</h1>
+			<p>Fields marked with an * are required!</p>
+		</div><!--Close pageTitle-->
+		<form>
+		<div id="tournamentDetails">
+			<div id="tdTitleBar">
+				<h3 id="tdHeader">Tournament Details<i onclick="toggleSection(tdForm, this)" class="bi bi-caret-down-fill" style="float:right;"></i></h3>
+			</div><!--Close tdTitleBar-->
+			<div hidden id="tdForm" class="container-fluid">
+				<div class="row">
+					<div class="col">
+						<label for="t_title">Tournament Title:</label>
+					</div><!--Close Col1-->
+					<div class="col">
+						<input type="text" id="t_title" name="t_title">
+					</div><!--Close Col2-->
+				</div><!--Close Row1-->
+				<div class="row">
+					<div class="col">
+						<label for="t_desc">Tournament Description:</label>
+					</div><!--Close Col1-->
+					<div class="col">
+						<input type="text" id="t_desc" name="t_desc">
+					</div><!--Close Col2-->
+				</div><!--Close Row2-->
+				<div class="row">
+					<div class="col">
+						<label for="t_prize">Tournament Prize:</label>
+					</div><!--Close Col1-->
+					<div class="col">
+						<input type="text" id="t_prize" name="t_prize">
+					</div><!--Close Col2-->
+				</div><!--Close Row3-->
+				<div class="row">
+					<div class="col">
+						<label for="t_start">Start Date:</label>
+					</div><!--Close Col1-->
+					<div class="col">
+						<input type="Date" id="t_start" name="t_start">
+					</div><!--Close Col2-->
+				</div><!--Close Row4-->
+				<div class="row">
+					<div class="col">
+						<label for="t_end">End Date:</label>
+					</div><!--Close Col1-->
+					<div class="col">
+						<input type="Date" id="t_end" name="t_end">
+					</div><!--Close Col2-->
+				</div><!--Close Row5-->
+			</div><!--Close tdForm-->
+		</div><!--Close tournamentDetails-->
+		
+		<div id="addSponsor">
+			<p><i onclick="sponsorDetails.hidden=false; addSponsor.remove();" class="bi bi-plus-circle"></i>Add Sponsor</p>
+		</div><!--Close addSponsor-->
+		<div hidden id="sponsorDetails">
+			<div id="spTitleBar">
+				<h3 id="spHeader">Sponsor Details<i onclick="toggleSection(spForm, this)" class="bi bi-caret-up-fill" style="float:right;"></i></h3>
+			</div><!--Close spTitleBar-->
+			<div id="spForm" class="container-fluid">
+				<div class="row">
+					<div class="col">
+						<label for="s_title">Sponsor Title:</label>
+					</div><!--Close Col1-->
+					<div class="col">
+						<input type="text" id="s_title" name="s_title">
+					</div><!--Close Col2-->
+				</div><!--Close Row1-->
+				<div class="row">
+					<div class="col">
+						<label for="s_desc">Sponsor Description:</label>
+					</div><!--Close Col1-->
+					<div class="col">
+						<input type="text" id="s_desc" name="s_desc">
+					</div><!--Close Col2-->
+				</div><!--Close Row2-->
+				<div class="row">
+					<div class="col">
+						<label for="s_thumb">Sponsor Thumbnail:</label>
+					</div><!--Close Col1-->
+					<div class="col">
+						<input type="text" id="s-thumb" name="s_thumb">
+					</div><!--Close Col2-->
+				</div><!--Close Row3-->
+				<div class="row">
+					<div class="col">
+						<label for="s_head">Header Image:</label>
+					</div><!--Close Col1-->
+					<div class="col">
+						<input type="text" id="s_head" name="s_head">
+					</div><!--Close Col2-->
+				</div><!--Close Row4-->
+			</div><!--Close spForm-->
+		</div><!--Close sponsorDetails-->
+		
+		<div id="contestantDetails">
+			<div id="cdTitleBar">
+				<h3 id="cdHeader">Contestant Details<i onclick="toggleSection(cdForm, this)" class="bi bi-caret-down-fill" style="float:right;"></i></h3>
+			</div><!--Close cdTitleBar-->
+			<div hidden id="cdForm" class="container-fluid">
+				<p>Contestant 1</p>
+				<div id="name1" class="row">
+					<div class="col">
+						<label for="c_name">Contestant Name:</label>
+					</div><!--Close Col1-->
+					<div class="col">
+						<input type="text" id="c_name" name="c_name">
+					</div><!--Close Col2-->
+				</div><!--Close Row1-->
+				<div id="logo1" class="row">
+					<div class="col">
+						<label for="c_logo">Contestant Logo:</label>
+					</div><!--Close Col1-->
+					<div class="col">
+						<input type="text" id="c_logo" name="c_logo">
+					</div><!--Close Col2-->
+				</div><!--Close Row2-->
+				<div id="seed1" class="row">
+					<div class="col">
+						<label for="c_seed">Contestant Seed:</label>
+					</div><!--Close Col1-->
+					<div class="col">
+						<input type="text" id="c_seed" name="c_seed">
+					</div><!--Close Col2-->
+				</div><!--Close Row3-->
+				<div id="addContestant">
+					<p><i onclick="addNewContestant()" class="bi bi-plus-circle"></i>Add Contestant</p>
+				</div><!--Close addContestant-->
+			</div><!--Close cdForm-->
+		</div><!--Close contestantDetails-->
+		<br>
+		<input type="submit" value="Create Tournament">
+		</form><!--Close Form-->
+		
+		<!--Scripts-->
+		<script>
+			function toggleSection(target, icon){
+				if(icon.classList.contains("bi-caret-down-fill")){
+					icon.classList.remove("bi-caret-down-fill");
+					icon.classList.add("bi-caret-up-fill");
+					target.hidden = false;
+				}else{
+					icon.classList.remove("bi-caret-up-fill");
+					icon.classList.add("bi-caret-down-fill");
+					target.hidden = true;
+				}
+			}
+			
+			var contestantCount = 1;
+			function addNewContestant(){
+				var originalName = document.getElementById('name1');
+				var originalLogo = document.getElementById('logo1');
+				var originalSeed = document.getElementById('seed1');
+				
+				var cloneName = originalName.cloneNode(true);
+				var cloneLogo = originalLogo.cloneNode(true);
+				var cloneSeed = originalSeed.cloneNode(true);
+				
+				contestantCount = contestantCount + 1;
+				cloneName.id = "name" + contestantCount;
+				cloneLogo.id = "logo" + contestantCount;
+				cloneSeed.id = "seed" + contestantCount;
+				
+				var contestantLabel = document.createElement("p");
+				contestantLabel.textContent = "Contestant " + contestantCount;
+				
+				var contestantSection = document.getElementById("cdForm");
+				contestantSection.insertBefore(cloneSeed, document.getElementById("addContestant"));
+				contestantSection.insertBefore(cloneLogo, cloneSeed);
+				contestantSection.insertBefore(cloneName, cloneLogo);
+				contestantSection.insertBefore(contestantLabel, cloneName);
+			}
+		</script>
+	</body>
+</html>
