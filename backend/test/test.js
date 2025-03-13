@@ -1,4 +1,6 @@
 import { should } from "chai"; should()
+import sinon from "sinon"
+import faker from "faker"
 
 describe('Array', function () {
   describe('#indexOf()', function () {
