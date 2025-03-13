@@ -7,5 +7,6 @@ import { Component } from '@angular/core';
   styleUrl: './create-tournament.component.css'
 })
 export class CreateTournamentComponent {
+  test: number = 5;
 
 }
