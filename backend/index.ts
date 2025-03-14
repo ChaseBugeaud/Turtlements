@@ -1,20 +1,43 @@
 import dotenv from "dotenv"
 import express from "express"
-import pgPromise from "pg-promise"
+import bodyParser from "body-parser"
+import { Sequelize } from "sequelize"
+// import { PostgresDialect } from "sequelize"
 
 dotenv.config()
 
-const pg_user = process.env.PG_USER
-const pg_pass = process.env.PG_PASS
-const pg_host = process.env.PG_HOST
-const pg_port = process.env.PG_PORT
-const pg_database = process.env.PG_DATABASE
-
 const app = express()
-const port = 3000
+const port: number = 3000
+const pg_database: string = process.env["PG_DATABASE"]!
+const pg_username: string = process.env["PG_USER"]!
+const pg_password: string = process.env["PG_PASS"]!
+const pg_host: string = process.env["PG_HOST"]!
 
-const pgp = pgPromise()
-const db = pgp(`postgres://${pg_user}:${pg_pass}@${pg_host}:${pg_port}/${pg_database}`)
+const sequelize = new Sequelize(pg_database, pg_username, pg_password, {
+  host: pg_host,
+  dialect: "postgres",
+  dialectOptions: {
+    // FIXME: this is a temp solution.
+    // see https://stackoverflow.com/questions/61254851/heroku-postgres-sequelize-no-pg-hba-conf-entry-for-host
+    ssl: {
+      rejectUnauthorized: false
+    }
+  }
+})
+
+try {
+  await sequelize.authenticate()
+  console.log("connection established")
+} catch (e) {
+  console.error(e)
+}
+
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
+
+app.get("/", (req, res) => {
+  res.send("Hello World!")
+})
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
