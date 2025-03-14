@@ -4,20 +4,22 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Sponsor extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      // define association here
+      Sponsor.belongsTo(models.Tournament, {
+        foreignKey: {
+          allowNull: false,
+          name: "tournament_id"
+        },
+        as: "tournament"
+      })
     }
   }
   Sponsor.init({
     name: DataTypes.STRING,
-    description: DataTypes.STRING,
     thumbnail: DataTypes.STRING,
-    header_image: DataTypes.STRING
+    header_image: DataTypes.STRING,
+    description: DataTypes.STRING,
+    tournament_id: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Sponsor',

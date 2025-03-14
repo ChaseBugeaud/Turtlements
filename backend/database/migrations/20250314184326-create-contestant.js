@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Sponsors', {
+    await queryInterface.createTable('contestants', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -13,14 +13,17 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
-      description: {
+      logo: {
         type: Sequelize.STRING
       },
-      thumbnail: {
-        type: Sequelize.STRING
+      seed: {
+        allowNull: false,
+        type: Sequelize.INTEGER
       },
-      header_image: {
-        type: Sequelize.STRING
+      tournament_id: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: { model: "tournaments", key: "id" }
       },
       createdAt: {
         allowNull: false,
@@ -33,6 +36,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Sponsors');
+    await queryInterface.dropTable('contestants');
   }
 };

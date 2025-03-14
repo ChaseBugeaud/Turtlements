@@ -2,7 +2,6 @@ import dotenv from "dotenv"
 import express from "express"
 import bodyParser from "body-parser"
 import { Sequelize } from "sequelize"
-// import { PostgresDialect } from "sequelize"
 
 dotenv.config()
 
@@ -13,6 +12,7 @@ const pg_username: string = process.env["PG_USER"]!
 const pg_password: string = process.env["PG_PASS"]!
 const pg_host: string = process.env["PG_HOST"]!
 
+//FIXME: connection info duplicated in ./database/config/config.js
 const sequelize = new Sequelize(pg_database, pg_username, pg_password, {
   host: pg_host,
   dialect: "postgres",
