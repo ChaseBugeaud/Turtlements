@@ -14,7 +14,7 @@ export class Score extends BaseEntity {
     @ManyToOne(() => Matchup, (matchup) => matchup.score)
     matchup: Matchup
 
-    @ManyToOne(() => Contestant, (contestant) => contestant.score)
+    @ManyToOne(() => Contestant, (contestant) => contestant.scores)
     contestant: Contestant
 
 }

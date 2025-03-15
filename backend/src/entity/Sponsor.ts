@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToOne, JoinColumn } from "typeorm"
-import { Tournament } from "./Tournament.1"
+import { Tournament } from "./Tournament"
 
 @Entity()
 export class Sponsor extends BaseEntity {

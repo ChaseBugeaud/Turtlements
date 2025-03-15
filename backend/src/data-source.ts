@@ -1,12 +1,11 @@
 import "reflect-metadata"
 import * as dotenv from "dotenv"
 import { DataSource } from "typeorm"
-import { Tournament } from "./entity/Tournament"
-import { Contestant } from "./entity/Contestant"
-import { Matchup } from "./entity/Matchup"
-import { Score } from "./entity/Score"
-import { Sponsor } from "./entity/Sponsor"
-
+import { Tournament } from "./entity/Tournament.ts"
+import { Contestant } from "./entity/Contestant.ts"
+import { Matchup } from "./entity/Matchup.ts"
+import { Score } from "./entity/Score.ts"
+import { Sponsor } from "./entity/Sponsor.ts"
 
 dotenv.config()
 
@@ -25,7 +24,7 @@ export const AppDataSource = new DataSource({
     database: pg_database,
     synchronize: true,
     logging: false,
-    entities: [Tournament, Contestant, Matchup, Sponsor, Score],
+    entities: ["src/entity/*.ts"],
     migrations: [],
     subscribers: [],
 })
