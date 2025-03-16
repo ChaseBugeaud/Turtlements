@@ -23,17 +23,16 @@ export class BracketService {
     return Math.pow(2, Math.ceil(Math.log2(this.numContestants)));
   }
   public calculateByes(): number {
-
+    if (this.numContestants < 2) throw new Error("InsufficientContestants");
     if (this.nextPowerOf2() === this.numContestants) {
       return 0;
     } else {
       return this.nextPowerOf2() - this.numContestants;
     }
-
-    return this.nextPowerOf2();
   }
 
   public calculateMatchupCount(): number {
+    if (this.numContestants < 2) throw new Error("InsufficientContestants");
     return this.nextPowerOf2() - 1;
   }
 }
