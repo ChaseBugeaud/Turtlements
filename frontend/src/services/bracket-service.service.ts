@@ -18,21 +18,22 @@ export class BracketService {
     this.numContestants = this.tournament.getContestants().length;
   }
 
-  private nextPowerOf2(): number {
+  private ceilPowerOf2(): number {
     //next power of 2 is Math.ceil(log2(numContestants))
     return Math.pow(2, Math.ceil(Math.log2(this.numContestants)));
   }
+
   public calculateByes(): number {
     if (this.numContestants < 2) throw new Error("InsufficientContestants");
-    if (this.nextPowerOf2() === this.numContestants) {
+    if (this.ceilPowerOf2() === this.numContestants) {
       return 0;
     } else {
-      return this.nextPowerOf2() - this.numContestants;
+      return this.ceilPowerOf2() - this.numContestants;
     }
   }
 
   public calculateMatchupCount(): number {
     if (this.numContestants < 2) throw new Error("InsufficientContestants");
-    return this.nextPowerOf2() - 1;
+    return this.ceilPowerOf2() - 1;
   }
 }
