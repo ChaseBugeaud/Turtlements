@@ -57,15 +57,18 @@ var BracketService = function () {
             return Math.pow(2, Math.ceil(Math.log2(this.numContestants)));
         };
         BracketService_1.prototype.calculateByes = function () {
+            if (this.numContestants < 2)
+                throw new Error("InsufficientContestants");
             if (this.nextPowerOf2() === this.numContestants) {
                 return 0;
             }
             else {
                 return this.nextPowerOf2() - this.numContestants;
             }
-            return this.nextPowerOf2();
         };
         BracketService_1.prototype.calculateMatchupCount = function () {
+            if (this.numContestants < 2)
+                throw new Error("InsufficientContestants");
             return this.nextPowerOf2() - 1;
         };
         return BracketService_1;

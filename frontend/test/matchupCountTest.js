@@ -5,6 +5,7 @@ var chai_1 = require("chai");
 var Contestant_1 = require("../src/classes/Contestant");
 var bracket_service_service_1 = require("../src/services/bracket-service.service");
 var Tournament_1 = require("../src/classes/Tournament");
+var assert = require('assert');
 describe('Calculate Matchup Count', function () {
     describe('4 Contestants', function () {
         it('3 matchups', function () {
@@ -35,6 +36,19 @@ describe('Calculate Matchup Count', function () {
             var tournament = new Tournament_1.Tournament("Epic Tournament", "fun", cArr, datetime);
             var bracketService = new bracket_service_service_1.BracketService(tournament);
             bracketService.calculateMatchupCount().should.equal(15);
+        });
+    });
+    describe('1 Contestant', function () {
+        it('throw error', function () {
+            function insufficientContestants() {
+                var c1 = new Contestant_1.Contestant("Al", 1);
+                var cArr = [c1];
+                var datetime = new Date();
+                var tournament = new Tournament_1.Tournament("Epic Tournament", "fun", cArr, datetime);
+                var bracketService = new bracket_service_service_1.BracketService(tournament);
+                bracketService.calculateMatchupCount();
+            }
+            assert.throws(insufficientContestants, /InsufficientContestants/);
         });
     });
 });
