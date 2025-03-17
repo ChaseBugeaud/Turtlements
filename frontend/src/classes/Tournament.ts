@@ -98,8 +98,6 @@ export class Tournament {
     this.bracket = bracket;
   }
 
-
-  //TODO: implement other functions
   //Other functions
 }
 

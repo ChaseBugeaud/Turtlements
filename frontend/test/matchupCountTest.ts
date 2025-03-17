@@ -4,9 +4,9 @@ import { BracketService } from "../src/services/bracket-service.service";
 import { Tournament } from "../src/classes/Tournament";
 var assert = require('assert');
 
-describe('Calculate Matchup Count', function() {
-  describe('4 Contestants', function() {
-    it('3 matchups', function() {
+describe('Calculate Matchup Count', function () {
+  describe('4 Contestants', function () {
+    it('3 matchups', function () {
       let c1: Contestant = new Contestant("Al", 1);
       let c2: Contestant = new Contestant("Brittany", 2);
       let c3: Contestant = new Contestant("Chase", 3);
@@ -16,15 +16,14 @@ describe('Calculate Matchup Count', function() {
 
       let datetime = new Date();
 
-
       let tournament: Tournament = new Tournament("Epic Tournament", "fun", cArr, datetime);
       let bracketService: BracketService = new BracketService(tournament);
       bracketService.calculateMatchupCount().should.equal(3);
     })
   })
 
-  describe('9 Contestants', function() {
-    it('15 matchups', function() {
+  describe('9 Contestants', function () {
+    it('15 matchups', function () {
       let c1: Contestant = new Contestant("Al", 1);
       let c2: Contestant = new Contestant("Brittany", 2);
       let c3: Contestant = new Contestant("Chase", 3);
@@ -46,8 +45,8 @@ describe('Calculate Matchup Count', function() {
     })
   })
 
-  describe('1 Contestant', function() {
-    it('throw error', function() {
+  describe('1 Contestant', function () {
+    it('throw error', function () {
       function insufficientContestants() {
         let c1: Contestant = new Contestant("Al", 1);
         let cArr = [c1];
@@ -62,5 +61,4 @@ describe('Calculate Matchup Count', function() {
       assert.throws(insufficientContestants, /InsufficientContestants/);
     })
   })
-
 })

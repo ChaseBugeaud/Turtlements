@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Matchup = void 0;
 var Matchup = /** @class */ (function () {
-    function Matchup(bestOfCount, contestant1, contestant2, spot) {
+    function Matchup(bestOfCount, spot, contestant1, contestant2) {
         if (contestant1) {
             this.contestant1 = contestant1;
         }
