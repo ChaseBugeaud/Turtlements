@@ -4,9 +4,9 @@ import { Tournament } from "../src/classes/Tournament";
 import { BracketService } from "../src/services/bracket-service.service";
 var assert = require('assert');
 
-describe('Calculate Bye Count', function() {
-  describe('4 Contestants', function() {
-    it('0 byes', function() {
+describe('Calculate Bye Count', function () {
+  describe('4 Contestants', function () {
+    it('0 byes', function () {
       let c1: Contestant = new Contestant("Al", 1);
       let c2: Contestant = new Contestant("Brittany", 2);
       let c3: Contestant = new Contestant("Chase", 3);
@@ -21,8 +21,8 @@ describe('Calculate Bye Count', function() {
       bracketService.calculateByes().should.equal(0);
     })
 
-    describe('5 Contestants', function() {
-      it('3 byes', function() {
+    describe('5 Contestants', function () {
+      it('3 byes', function () {
         let c1: Contestant = new Contestant("Al", 1);
         let c2: Contestant = new Contestant("Brittany", 2);
         let c3: Contestant = new Contestant("Chase", 3);
@@ -39,8 +39,8 @@ describe('Calculate Bye Count', function() {
       })
     })
 
-    describe('1 Contestant', function() {
-      it('throw error', function() {
+    describe('1 Contestant', function () {
+      it('Throw InsufficientContestants Error', function () {
         function insufficientContestants() {
           let c1: Contestant = new Contestant("Al", 1);
           let cArr = [c1];

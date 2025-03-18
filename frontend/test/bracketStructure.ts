@@ -70,4 +70,20 @@ describe('Bracket 2D Array Structure Test', function () {
     })
     */
 
+  describe('1 Contestant', function () {
+    it('throw error', function () {
+      function insufficientContestants() {
+        let c1: Contestant = new Contestant("Al", 1);
+        let cArr = [c1];
+
+        let datetime = new Date();
+
+        let tournament: Tournament = new Tournament("Epic Tournament", "fun", cArr, datetime);
+
+        let bracketService: BracketService = new BracketService(tournament);
+        bracketService.createUnsortedBracket();
+      }
+      assert.throws(insufficientContestants, /InsufficientContestants/);
+    })
+  })
 })
