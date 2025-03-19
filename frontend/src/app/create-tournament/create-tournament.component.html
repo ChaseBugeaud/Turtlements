@@ -1,187 +1,71 @@
+<!-- This is the root of the HTML document -->
 <html>
-	<head>
-		<link href="create-tournament.component.css"
-              rel="stylesheet">
-		<!--BootStrap Icons Library-->
-		<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
-              rel="stylesheet">
-		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
-              rel="stylesheet">
-	</head>
-	<body>
-		<div id="pageTitle">
-			<h1>NEW TOURNAMENT</h1>
-			<p>Fields marked with an * are required!</p>
-		</div><!--Close pageTitle-->
-		<form>
-		<div id="tournamentDetails">
-			<div id="tdTitleBar">
-				<h3 id="tdHeader">Tournament Details<i onclick="toggleSection(tdForm, this)" class="bi bi-caret-down-fill" style="float:right;"></i></h3>
-			</div><!--Close tdTitleBar-->
-			<div hidden id="tdForm" class="container-fluid">
-				<div class="row">
-					<div class="col">
-						<label for="t_title">Tournament Title:</label>
-					</div><!--Close Col1-->
-					<div class="col">
-						<input type="text" id="t_title" name="t_title">
-					</div><!--Close Col2-->
-				</div><!--Close Row1-->
-				<div class="row">
-					<div class="col">
-						<label for="t_desc">Tournament Description:</label>
-					</div><!--Close Col1-->
-					<div class="col">
-						<input type="text" id="t_desc" name="t_desc">
-					</div><!--Close Col2-->
-				</div><!--Close Row2-->
-				<div class="row">
-					<div class="col">
-						<label for="t_prize">Tournament Prize:</label>
-					</div><!--Close Col1-->
-					<div class="col">
-						<input type="text" id="t_prize" name="t_prize">
-					</div><!--Close Col2-->
-				</div><!--Close Row3-->
-				<div class="row">
-					<div class="col">
-						<label for="t_start">Start Date:</label>
-					</div><!--Close Col1-->
-					<div class="col">
-						<input type="Date" id="t_start" name="t_start">
-					</div><!--Close Col2-->
-				</div><!--Close Row4-->
-				<div class="row">
-					<div class="col">
-						<label for="t_end">End Date:</label>
-					</div><!--Close Col1-->
-					<div class="col">
-						<input type="Date" id="t_end" name="t_end">
-					</div><!--Close Col2-->
-				</div><!--Close Row5-->
-			</div><!--Close tdForm-->
-		</div><!--Close tournamentDetails-->
+  
+  <!-- The head section of the HTML document contains metadata, links to styles, and scripts -->
+  <head>
+    <!-- Title of the page, which is displayed on the browser's title bar or tab -->
+    <title>ng-model Example</title>
 
-		<div id="addSponsor">
-			<p><i onclick="sponsorDetails.hidden=false; addSponsor.remove();" class="bi bi-plus-circle"></i>Add Sponsor</p>
-		</div><!--Close addSponsor-->
-		<div hidden id="sponsorDetails">
-			<div id="spTitleBar">
-				<h3 id="spHeader">Sponsor Details<i onclick="toggleSection(spForm, this)" class="bi bi-caret-up-fill" style="float:right;"></i></h3>
-			</div><!--Close spTitleBar-->
-			<div id="spForm" class="container-fluid">
-				<div class="row">
-					<div class="col">
-						<label for="s_title">Sponsor Title:</label>
-					</div><!--Close Col1-->
-					<div class="col">
-						<input type="text" id="s_title" name="s_title">
-					</div><!--Close Col2-->
-				</div><!--Close Row1-->
-				<div class="row">
-					<div class="col">
-						<label for="s_desc">Sponsor Description:</label>
-					</div><!--Close Col1-->
-					<div class="col">
-						<input type="text" id="s_desc" name="s_desc">
-					</div><!--Close Col2-->
-				</div><!--Close Row2-->
-				<div class="row">
-					<div class="col">
-						<label for="s_thumb">Sponsor Thumbnail:</label>
-					</div><!--Close Col1-->
-					<div class="col">
-						<input type="text" id="s-thumb" name="s_thumb">
-					</div><!--Close Col2-->
-				</div><!--Close Row3-->
-				<div class="row">
-					<div class="col">
-						<label for="s_head">Header Image:</label>
-					</div><!--Close Col1-->
-					<div class="col">
-						<input type="text" id="s_head" name="s_head">
-					</div><!--Close Col2-->
-				</div><!--Close Row4-->
-			</div><!--Close spForm-->
-		</div><!--Close sponsorDetails-->
+    <!-- Link to the external CSS file to style the components, specifically for the create-tournament component -->
+    <link href="create-tournament.component.css" rel="stylesheet">
 
-		<div id="contestantDetails">
-			<div id="cdTitleBar">
-				<h3 id="cdHeader">Contestant Details<i onclick="toggleSection(cdForm, this)" class="bi bi-caret-down-fill" style="float:right;"></i></h3>
-			</div><!--Close cdTitleBar-->
-			<div hidden id="cdForm" class="container-fluid">
-				<p>Contestant 1</p>
-				<div id="name1" class="row">
-					<div class="col">
-						<label for="c_name">Contestant Name:</label>
-					</div><!--Close Col1-->
-					<div class="col">
-						<input type="text" id="c_name" name="c_name">
-					</div><!--Close Col2-->
-				</div><!--Close Row1-->
-				<div id="logo1" class="row">
-					<div class="col">
-						<label for="c_logo">Contestant Logo:</label>
-					</div><!--Close Col1-->
-					<div class="col">
-						<input type="text" id="c_logo" name="c_logo">
-					</div><!--Close Col2-->
-				</div><!--Close Row2-->
-				<div id="seed1" class="row">
-					<div class="col">
-						<label for="c_seed">Contestant Seed:</label>
-					</div><!--Close Col1-->
-					<div class="col">
-						<input type="text" id="c_seed" name="c_seed">
-					</div><!--Close Col2-->
-				</div><!--Close Row3-->
-				<div id="addContestant">
-					<p><i onclick="addNewContestant()" class="bi bi-plus-circle"></i>Add Contestant</p>
-				</div><!--Close addContestant-->
-			</div><!--Close cdForm-->
-		</div><!--Close contestantDetails-->
-		<br>
-		<input type="submit" value="Create Tournament">
-		</form><!--Close Form-->
+    <!-- Loads the AngularJS 1.8.2 library from Google's CDN to enable AngularJS functionality in the app -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  </head>
+  
+  <!-- The body section of the document contains the visible content -->
+  <body>
+    
+    <!-- Heading for the page, displayed as a large heading on the page -->
+    <h2>Create a Person</h2>
 
-		<!--Scripts-->
-		<script>
-			function toggleSection(target, icon){
-				if(icon.classList.contains("bi-caret-down-fill")){
-					icon.classList.remove("bi-caret-down-fill");
-					icon.classList.add("bi-caret-up-fill");
-					target.hidden = false;
-				}else{
-					icon.classList.remove("bi-caret-up-fill");
-					icon.classList.add("bi-caret-down-fill");
-					target.hidden = true;
-				}
-			}
+    <!-- A paragraph to display the entered user's name dynamically using Angular's interpolation -->
+    <p>Your entered name: {{ userName }}</p>
 
-			let contestantCount = 1;
-			function addNewContestant(){
-				let originalName = document.getElementById('name1');
-				let originalLogo = document.getElementById('logo1');
-				let originalSeed = document.getElementById('seed1');
+    <!-- Another paragraph to display the entered user's birthday, with a date filter applied using Angular's pipe (|) -->
+    <!-- The 'date' pipe formats the date input in a readable format -->
+    <p>Your Birthday: {{ userBDay | date }}</p>
 
-				let cloneName = originalName.cloneNode(true);
-				let cloneLogo = originalLogo.cloneNode(true);
-				let cloneSeed = originalSeed.cloneNode(true);
+    <!-- Start of a section for the user to input their name -->
+    <div class="nameFeild">
+      
+      <!-- Label for the 'userName' input field, this label is associated with the input element via the 'for' attribute -->
+      <label for="userName">User Name:</label>
 
-				contestantCount = contestantCount + 1;
-				cloneName.id = "name" + contestantCount;
-				cloneLogo.id = "logo" + contestantCount;
-				cloneSeed.id = "seed" + contestantCount;
+      <!-- Input field for the user to type their name. The 'ngModel' directive creates two-way data binding between the input field and the 'userName' property in the component -->
+      <!-- This means any change in the input field will automatically update 'userName' in the component and vice versa -->
+      <input type="text" id="userName" [(ngModel)]="userName">
+      
+      <!-- Submit button that triggers the 'onSubmit()' method when clicked. The '(click)' event binding links the button to the 'onSubmit' function -->
+      <button (click)="onSubmit()">Submit</button>
+    </div>
 
-				let contestantLabel = document.createElement("p");
-				contestantLabel.textContent = "Contestant " + contestantCount;
+    <!-- Start of another section for uploading a photo -->
+    <div class="photoFeild">
+      
+      <!-- Label for the 'userPhoto' file input field, allowing the user to understand the purpose of this input -->
+      <label for="userPhoto">Upload Photo:</label>
 
-				let contestantSection = document.getElementById("cdForm");
-				contestantSection.insertBefore(cloneSeed, document.getElementById("addContestant"));
-				contestantSection.insertBefore(cloneLogo, cloneSeed);
-				contestantSection.insertBefore(cloneName, cloneLogo);
-				contestantSection.insertBefore(contestantLabel, cloneName);
-			}
-		</script>
-	</body>
+      <!-- File input field that allows the user to choose a file from their device. The 'change' event is triggered when the user selects a file, and it calls the 'onFileSelected($event)' method -->
+      <!-- This method handles the selected file in the component -->
+      <input type="file" id="userPhoto" (change)="onFileSelected($event)"> 
+
+      <!-- Submit button to trigger the 'onSubmit()' method for submitting the form -->
+      <button (click)="onSubmit()">Submit</button>
+    </div>
+
+    <!-- Start of the section for entering the user's birthday -->
+    <div class="bDayFeild">
+      
+      <!-- Label for the 'userBDay' date input field -->
+      <label for="userBDay">Enter Birthday:</label>
+
+      <!-- Input field for the user to pick a date. The 'ngModel' directive creates two-way data binding, binding the selected date to the 'userBDay' property in the component -->
+      <input type="date" id="userBDay" [(ngModel)]="userBDay">
+
+      <!-- Submit button to trigger the 'onSubmit()' method when clicked -->
+      <button (click)="onSubmit()">Submit</button>
+    </div>
+
+  </body>
 </html>
