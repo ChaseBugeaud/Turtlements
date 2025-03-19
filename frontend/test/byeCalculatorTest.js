@@ -34,7 +34,7 @@ describe('Calculate Bye Count', function () {
             });
         });
         describe('1 Contestant', function () {
-            it('throw error', function () {
+            it('Throw InsufficientContestants Error', function () {
                 function insufficientContestants() {
                     var c1 = new Contestant_1.Contestant("Al", 1);
                     var cArr = [c1];

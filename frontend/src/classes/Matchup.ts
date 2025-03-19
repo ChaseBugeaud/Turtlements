@@ -9,7 +9,7 @@ export class Matchup {
   private spot?: number;
   private winner?: Contestant;
 
-  constructor(bestOfCount: number, contestant1?: Contestant, contestant2?: Contestant, spot?: number) {
+  constructor(bestOfCount: number, spot?: number, contestant1?: Contestant, contestant2?: Contestant) {
     if (contestant1) {
       this.contestant1 = contestant1;
     }

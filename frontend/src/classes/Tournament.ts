@@ -78,6 +78,10 @@ export class Tournament {
     this.contestants = contestants;
   }
 
+  public addContestant(contestant: Contestant): void {
+    this.contestants.push(contestant);
+  }
+
   public setStartDate(startDate: Date): void {
     this.startDate = startDate;
   }
@@ -98,8 +102,6 @@ export class Tournament {
     this.bracket = bracket;
   }
 
-
-  //TODO: implement other functions
   //Other functions
 }
 

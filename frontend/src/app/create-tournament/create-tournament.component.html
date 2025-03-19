@@ -61,7 +61,7 @@
 				</div><!--Close Row5-->
 			</div><!--Close tdForm-->
 		</div><!--Close tournamentDetails-->
-		
+
 		<div id="addSponsor">
 			<p><i onclick="sponsorDetails.hidden=false; addSponsor.remove();" class="bi bi-plus-circle"></i>Add Sponsor</p>
 		</div><!--Close addSponsor-->
@@ -104,7 +104,7 @@
 				</div><!--Close Row4-->
 			</div><!--Close spForm-->
 		</div><!--Close sponsorDetails-->
-		
+
 		<div id="contestantDetails">
 			<div id="cdTitleBar">
 				<h3 id="cdHeader">Contestant Details<i onclick="toggleSection(cdForm, this)" class="bi bi-caret-down-fill" style="float:right;"></i></h3>
@@ -143,7 +143,7 @@
 		<br>
 		<input type="submit" value="Create Tournament">
 		</form><!--Close Form-->
-		
+
 		<!--Scripts-->
 		<script>
 			function toggleSection(target, icon){
@@ -157,26 +157,26 @@
 					target.hidden = true;
 				}
 			}
-			
-			var contestantCount = 1;
+
+			let contestantCount = 1;
 			function addNewContestant(){
-				var originalName = document.getElementById('name1');
-				var originalLogo = document.getElementById('logo1');
-				var originalSeed = document.getElementById('seed1');
-				
-				var cloneName = originalName.cloneNode(true);
-				var cloneLogo = originalLogo.cloneNode(true);
-				var cloneSeed = originalSeed.cloneNode(true);
-				
+				let originalName = document.getElementById('name1');
+				let originalLogo = document.getElementById('logo1');
+				let originalSeed = document.getElementById('seed1');
+
+				let cloneName = originalName.cloneNode(true);
+				let cloneLogo = originalLogo.cloneNode(true);
+				let cloneSeed = originalSeed.cloneNode(true);
+
 				contestantCount = contestantCount + 1;
 				cloneName.id = "name" + contestantCount;
 				cloneLogo.id = "logo" + contestantCount;
 				cloneSeed.id = "seed" + contestantCount;
-				
-				var contestantLabel = document.createElement("p");
+
+				let contestantLabel = document.createElement("p");
 				contestantLabel.textContent = "Contestant " + contestantCount;
-				
-				var contestantSection = document.getElementById("cdForm");
+
+				let contestantSection = document.getElementById("cdForm");
 				contestantSection.insertBefore(cloneSeed, document.getElementById("addContestant"));
 				contestantSection.insertBefore(cloneLogo, cloneSeed);
 				contestantSection.insertBefore(cloneName, cloneLogo);

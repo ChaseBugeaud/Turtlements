@@ -1,0 +1,26 @@
+<body>
+
+<div id="pageTitle">
+  <h1>NEW TOURNAMENT</h1>
+  <p>Fields marked with an * are required!</p>
+</div><!--Close pageTitle-->
+<form>
+<div id="tournamentDetails">
+
+  <div class="tdTitleBar">
+    <h3 id="tdHeader">Tournament Details<i onclick="toggleSection(tdForm, this)" class="bi bi-caret-down-fill" style="float:right;"></i></h3>
+    <label for="team-name">Team Name:</label>
+    <input type="text" name="team-name" #teamName>
+    <label for="team-logo">Logo:</label>
+    <input type="file" name="team-logo" >
+    <input type="button" name="add-contestant" value="Add Contestant" (click)="addContestantToTournament(teamName.value)">
+  </div>
+  <div class="team-container">
+    <li *ngFor="let contestant of tournament.getContestants()" class="team-list">
+      <div class="contestant">
+      {{contestant.getName()}}
+      </div>
+    </li>
+  </div>
+</div><!--Close tournamentDetails-->
+
