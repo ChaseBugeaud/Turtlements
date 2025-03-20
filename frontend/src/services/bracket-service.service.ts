@@ -12,11 +12,13 @@ export class BracketService {
   private tournament: Tournament;
   private numContestants: number;
   private contestants: Contestant[];
+  private matchupSpot: number;
 
   constructor(tournament: Tournament) {
     this.tournament = tournament;
     this.contestants = this.tournament.getContestants();
     this.numContestants = this.contestants.length;
+    this.matchupSpot = 0;
   }
 
   private ceilPowerOf2(): number {
@@ -38,8 +40,13 @@ export class BracketService {
     return this.ceilPowerOf2() - 1;
   }
 
+  public calculateFirstRoundMatchupCount(): number {
+    if (this.numContestants < 2) throw new Error("InsufficientContestants");
+    return this.ceilPowerOf2() / 2;
+  }
+
   public sortContestants(): void {
-    if (this.contestants.length < 1) throw new Error("InsufficientContestants");
+    if (this.contestants.length < 2) throw new Error("InsufficientContestants");
     this.contestants.sort(this.seedCompare);
   }
 
@@ -53,42 +60,35 @@ export class BracketService {
     }
   }
 
-  public createUnsortedBracket(): void {
-    //TODO: fix
-    if (this.numContestants < 2) {
-      throw new Error("InsufficientContestants");
-    }
-    let firstRound: Matchup[] = [];
+  public createFirstRoundMatchups(): Matchup[] {
+    if (this.numContestants < 2) throw new Error("InsufficientContestants");
+    let firstRoundMatchups: Matchup[] = [];
     let contestantsCopy: Contestant[] = JSON.parse(JSON.stringify(this.contestants));
-    let bracketSpot: number = 0;
-    let bracket: Matchup[][] = [];
-    //create byes
-    for (let i = 0; i < this.calculateByes(); i++, bracketSpot++) {
-      let c1: Contestant | undefined = contestantsCopy.shift();
-      let m: Matchup = new Matchup(1, bracketSpot, c1);
-      firstRound.push(m)
-    }
-    //calculate first round with instantiated contestants
-    for (let i = 0; contestantsCopy.length; i += 2, bracketSpot++) {
-      let c1: Contestant | undefined = contestantsCopy.shift();
-      let c2: Contestant | undefined = contestantsCopy.shift();
+    let byeCount: number = this.calculateByes();
+    let firstRoundMatchupCount: number = this.calculateFirstRoundMatchupCount();
+    let byeMatchups: Matchup[] = [];
 
-      let m: Matchup = new Matchup(1, bracketSpot, c1, c2);
-      firstRound.push(m);
+    //calculate bye matchups
+    for (let i = 0; i < byeCount; i++) {
+      let contestant: Contestant | undefined = contestantsCopy.shift();
+      let matchup: Matchup = new Matchup(1, this.matchupSpot, contestant);
+      byeMatchups.push(matchup);
+      this.matchupSpot++;
     }
-    bracket.push(firstRound);
-    //create shell for bracket - empty matchups with no contestants
-    while (bracket.length < (this.ceilPowerOf2() / 2)) {
-      let previousRound = bracket[bracket.length - 1];
-      let matchupCount: number = Math.ceil(previousRound.length / 2);
-      let currentRound: Matchup[] = [];
-      for (let j = 0; j < matchupCount; j++, bracketSpot++) {
-        let m: Matchup = new Matchup(1, bracketSpot);
-        currentRound.push(m);
-      }
-      bracket.push(currentRound);
+    firstRoundMatchups.push(...byeMatchups);
+    //create real first round matchups
+    for (let i = 0; i < contestantsCopy.length; i += 2) {
+      let contestant1: Contestant | undefined = contestantsCopy[i];
+      let contestant2: Contestant | undefined = contestantsCopy[i + 1];
+
+      let matchup: Matchup = new Matchup(1, this.matchupSpot, contestant1, contestant2);
+      this.matchupSpot++;
+      firstRoundMatchups.push(matchup);
     }
-    //console.log("bracket\n", bracket)
-    this.tournament.setBracket(bracket);
+    return firstRoundMatchups;
+  }
+
+  public createUnsortedBracket(): void {
+
   }
 }
