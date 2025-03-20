@@ -1,6 +1,8 @@
 import dotenv from "dotenv"
 import express from "express"
-import pgPromise from "pg-promise"
+import { drizzle } from "drizzle-orm/node-postgres"
+import { seed } from "drizzle-seed"
+import { contestants } from "./db/schema.ts"
 
 dotenv.config()
 
@@ -13,14 +15,20 @@ const pg_database = process.env.PG_DATABASE
 const app = express()
 const port = 3000
 
-const pgp = pgPromise()
-const db = pgp(`postgres://${pg_user}:${pg_pass}@${pg_host}:${pg_port}/${pg_database}`)
+const db = drizzle(`postgresql://${pg_user}:${pg_pass}@${pg_host}/${pg_database}`)
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
+async function main() {
+    await seed(db, { contestants })
+}
+
+app.get("/", (req, res) => {
+  res.send("Hello World!")
 })
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
 
+
+let thing = await main()
+console.log(thing)
