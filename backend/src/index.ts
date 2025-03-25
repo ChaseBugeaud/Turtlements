@@ -1,6 +1,7 @@
 import dotenv from "dotenv"
 import express from "express"
 import { drizzle } from "drizzle-orm/node-postgres"
+import { eq } from "drizzle-orm"
 import { seed } from "drizzle-seed"
 import { tournaments, contestants, sponsors, scores, matchups } from "./db/schema.ts"
 import * as schema from "./db/schema.ts"
@@ -22,7 +23,8 @@ const db = drizzle({
     ssl: {
       rejectUnauthorized: false
     }
-  }
+  },
+  schema: schema
 })
 
 app.use(express.json())
@@ -31,10 +33,55 @@ app.get("/", (req, res) => {
   res.send("Hello World!")
 })
 
+app.get("/tournaments/:tournamentId", async (req, res) => {
+  const tournamentId = Number(req.params.tournamentId)
+  try {
+    const tournament = await db.query.tournaments.findFirst({
+      where: eq(tournaments.id, tournamentId),
+      with: {
+        contestants: true,
+        sponsor: true
+      }
+    })
+    console.log(tournament)
+    // const tournament = db.select().from(tournaments).where(eq(tournaments.id, tournamentId))[0]
+    // const contestantArr = db.select().from(contestants).where(eq(contestants.tournament_id, tournamentId))
+    // const sponsor = db.select().from(sponsors).where(eq(sponsors.tournament_id, tournamentId))[0]
+    const responseObj = {
+      "name": tournament!.name,
+      "description": tournament!.description,
+      "start_date": tournament!.start_date,
+      "end_date": tournament!.end_date,
+      "prize": tournament?.prize
+      // "sponsor": {
+      //   "name": "guy",
+      //   "description": "yooo",
+      //   "thumbnail": "url",
+      //   "header_image": "myUrl"
+      // },
+      // "contestants": [
+      //   {
+      //     "name": "chase",
+      //     "logo": "logoUrl",
+      //     "seed": "3"
+      //   },
+      //   {
+      //     "name": "preet",
+      //     "logo": "logoUrl",
+      //     "seed": "2"
+      //   }
+      // ]
+    }
+    console.log(responseObj)
+    res.send(responseObj)
+  } catch (err) {
+    res.send("Something went wrong! Error: " + err)
+  }
+})
+
 app.post("/tournaments/create", async (req, res) => {
   try {
     await db.transaction(async (tx) => {
-      console.log(req.body)
       const tournamentId: number | null = await tx.insert(tournaments).values({
         name: req.body.name,
         description: req.body.description,
@@ -44,8 +91,6 @@ app.post("/tournaments/create", async (req, res) => {
       })
         .returning({ tournament_id: tournaments.id })
         .then(res => res[0].tournament_id ?? null)
-
-      console.log(tournamentId)
 
       for (const contestant of req.body.contestants) {
         await tx.insert(contestants).values({
@@ -66,8 +111,8 @@ app.post("/tournaments/create", async (req, res) => {
           tournament_id: Number(tournamentId)
         })
       }
+      res.redirect(`/tournaments/${tournamentId}`)
     })
-    res.send("Success!")
   } catch (err) {
     res.send("Error! Try again. Log: " + err)
   }
