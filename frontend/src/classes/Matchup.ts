@@ -6,10 +6,9 @@ export class Matchup {
   private contestant1?: Contestant;
   private contestant2?: Contestant;
   private games: Game[];
+  private parent?: Matchup;
   private spot?: number;
   private winner?: Contestant;
-  private leftChild: Matchup | undefined;
-  private rightChild: Matchup | undefined;
 
   constructor(bestOfCount: number, spot?: number, contestant1?: Contestant, contestant2?: Contestant) {
     if (contestant1) {
@@ -23,8 +22,6 @@ export class Matchup {
     if (spot) {
       this.spot = spot;
     }
-    this.leftChild = undefined;
-    this.rightChild = undefined;
   }
 
   //Getters
@@ -62,12 +59,8 @@ export class Matchup {
     return this.spot;
   }
 
-  public getLeftChild(): Matchup | undefined {
-    return this.leftChild;
-  }
-
-  public getRightChild(): Matchup | undefined {
-    return this.rightChild;
+  public getParent(): Matchup | undefined {
+    return this.parent;
   }
 
   //Setters
@@ -123,13 +116,8 @@ export class Matchup {
     this.spot = spot;
   }
 
-  public setLeftChild(leftChild: Matchup | undefined): void {
-    this.leftChild = leftChild;
+  public setParent(parent: Matchup): void {
+    this.parent = parent;
   }
 
-  public setRightChild(rightChild: Matchup | undefined): void {
-    this.rightChild = rightChild;
-  }
-
-  //Other functions
 }

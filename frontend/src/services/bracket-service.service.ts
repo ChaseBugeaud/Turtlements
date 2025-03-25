@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Tournament } from '../classes/Tournament';
 import { Contestant } from '../classes/Contestant';
 import { Matchup } from '../classes/Matchup';
+import { matchesGlob } from 'path/win32';
 
 @Injectable({
   providedIn: 'root'
@@ -60,12 +61,17 @@ export class BracketService {
     }
   }
 
+  public calculateRoundCount(): number {
+    if (this.contestants.length < 2) throw new Error("InsufficientContestants");
+
+    return Math.log2(this.ceilPowerOf2()) + 1;
+  }
+
   public createFirstRoundMatchups(): Matchup[] {
     if (this.numContestants < 2) throw new Error("InsufficientContestants");
     let firstRoundMatchups: Matchup[] = [];
     let contestantsCopy: Contestant[] = JSON.parse(JSON.stringify(this.contestants));
     let byeCount: number = this.calculateByes();
-    let firstRoundMatchupCount: number = this.calculateFirstRoundMatchupCount();
     let byeMatchups: Matchup[] = [];
 
     //calculate bye matchups
@@ -80,7 +86,6 @@ export class BracketService {
     for (let i = 0; i < contestantsCopy.length; i += 2) {
       let contestant1: Contestant | undefined = contestantsCopy[i];
       let contestant2: Contestant | undefined = contestantsCopy[i + 1];
-
       let matchup: Matchup = new Matchup(1, this.matchupSpot, contestant1, contestant2);
       this.matchupSpot++;
       firstRoundMatchups.push(matchup);
@@ -89,6 +94,18 @@ export class BracketService {
   }
 
   public createUnsortedBracket(): void {
+    let currentRound: Matchup[] = this.createFirstRoundMatchups();
+    let previousRound: Matchup[] = [];
+
+    //TODO: implemenet
+    for (let round = 0; round < this.calculateRoundCount(); round++) {
+
+
+
+    }
+
+
+
 
   }
 }

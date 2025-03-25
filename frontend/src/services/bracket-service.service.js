@@ -95,13 +95,17 @@ var BracketService = function () {
                 return 0;
             }
         };
+        BracketService_1.prototype.calculateRoundCount = function () {
+            if (this.contestants.length < 2)
+                throw new Error("InsufficientContestants");
+            return Math.log2(this.ceilPowerOf2()) + 1;
+        };
         BracketService_1.prototype.createFirstRoundMatchups = function () {
             if (this.numContestants < 2)
                 throw new Error("InsufficientContestants");
             var firstRoundMatchups = [];
             var contestantsCopy = JSON.parse(JSON.stringify(this.contestants));
             var byeCount = this.calculateByes();
-            var firstRoundMatchupCount = this.calculateFirstRoundMatchupCount();
             var byeMatchups = [];
             //calculate bye matchups
             for (var i = 0; i < byeCount; i++) {
