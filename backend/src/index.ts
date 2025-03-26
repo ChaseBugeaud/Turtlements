@@ -26,7 +26,7 @@ const db = drizzle({
   }
 })
 
-app.use(cors())
+app.use(cors({ origin:true }))
 app.use(express.json())
 
 app.get("/", (req, res) => {
