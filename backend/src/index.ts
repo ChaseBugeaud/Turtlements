@@ -4,7 +4,6 @@ import { drizzle } from "drizzle-orm/node-postgres"
 import { seed } from "drizzle-seed"
 import { tournaments, contestants, sponsors, scores, matchups } from "./db/schema.ts"
 import * as schema from "./db/schema.ts"
-import cors from "cors"
 
 dotenv.config()
 
@@ -26,7 +25,6 @@ const db = drizzle({
   }
 })
 
-app.use(cors({ origin:true }))
 app.use(express.json())
 
 app.get("/", (req, res) => {
@@ -34,6 +32,7 @@ app.get("/", (req, res) => {
 })
 
 app.post("/test", (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*")
   res.send("yo wassup")
 })
 
