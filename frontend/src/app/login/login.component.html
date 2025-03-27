@@ -1,0 +1,15 @@
+<div class="login-form">
+  <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+    <h1>Login</h1>
+    <div class="input-box">
+      <input type="text" [(ngModel)]="username" name="username" placeholder="Username" required/>
+    </div>
+    <div class="input-box">
+      <input type="password" [(ngModel)]="password" name="password" placeholder="Password" required/>
+    </div>
+    <!-- OPTIONAL (feature): Implement reset password form
+    <a href="#">Forgot Password?</a><br />
+    -->
+    <button type="submit" class="btn">Login</button>
+  </form>
+</div>
