@@ -43,37 +43,7 @@ app.get("/tournaments/:tournamentId", async (req, res) => {
         sponsor: true
       }
     })
-    console.log(tournament)
-    // const tournament = db.select().from(tournaments).where(eq(tournaments.id, tournamentId))[0]
-    // const contestantArr = db.select().from(contestants).where(eq(contestants.tournament_id, tournamentId))
-    // const sponsor = db.select().from(sponsors).where(eq(sponsors.tournament_id, tournamentId))[0]
-    const responseObj = {
-      "name": tournament!.name,
-      "description": tournament!.description,
-      "start_date": tournament!.start_date,
-      "end_date": tournament!.end_date,
-      "prize": tournament?.prize
-      // "sponsor": {
-      //   "name": "guy",
-      //   "description": "yooo",
-      //   "thumbnail": "url",
-      //   "header_image": "myUrl"
-      // },
-      // "contestants": [
-      //   {
-      //     "name": "chase",
-      //     "logo": "logoUrl",
-      //     "seed": "3"
-      //   },
-      //   {
-      //     "name": "preet",
-      //     "logo": "logoUrl",
-      //     "seed": "2"
-      //   }
-      // ]
-    }
-    console.log(responseObj)
-    res.send(responseObj)
+    res.send(tournament)
   } catch (err) {
     res.send("Something went wrong! Error: " + err)
   }
