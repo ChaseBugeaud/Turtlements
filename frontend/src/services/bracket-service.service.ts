@@ -29,8 +29,10 @@ export class BracketService {
   public calculateByes(): number {
     if (this.numContestants < 2) throw new Error("InsufficientContestants");
     if (this.ceilPowerOf2() === this.numContestants) {
+      //if the number of contestants are a power of 2, no byes needed
       return 0;
     } else {
+      //if the number of contestants aren't a power of 2, byes are calculated
       return this.ceilPowerOf2() - this.numContestants;
     }
   }
