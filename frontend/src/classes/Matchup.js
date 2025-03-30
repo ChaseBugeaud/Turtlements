@@ -9,6 +9,13 @@ var Matchup = /** @class */ (function () {
         if (contestant2) {
             this.contestant2 = contestant2;
         }
+        //determine if it is a bye or not
+        if ((contestant1 && !contestant2) || (!contestant1 && contestant2)) {
+            this.bye = true;
+        }
+        else {
+            this.bye = false;
+        }
         this.bestOfCount = bestOfCount;
         this.games = [];
         if (spot) {
@@ -47,6 +54,9 @@ var Matchup = /** @class */ (function () {
     };
     Matchup.prototype.getParent = function () {
         return this.parent;
+    };
+    Matchup.prototype.isBye = function () {
+        return this.bye;
     };
     //Setters
     Matchup.prototype.setContestant1 = function (contestant1) {

@@ -45,7 +45,7 @@ describe('Bracket Skeleton Structure', function () {
         let bracketService: BracketService = new BracketService(tournament);
 
         bracketService.createUnsortedBracket();
-        JSON.parse(JSON.stringify(tournament.getBracket())).should.deep.equal(JSON.parse(JSON.stringify(correctBracket)));
+        JSON.parse(JSON.stringify(bracketService.createUnsortedBracket())).should.deep.equal(JSON.parse(JSON.stringify(correctBracket)));
       })
   })
 
@@ -87,8 +87,7 @@ describe('Bracket Skeleton Structure', function () {
         let tournament: Tournament = new Tournament("Epic Tournament", "fun", cArr, datetime);
         let bracketService: BracketService = new BracketService(tournament);
 
-        bracketService.createUnsortedBracket();
-        JSON.parse(JSON.stringify(tournament.getBracket())).should.deep.equal(JSON.parse(JSON.stringify(correctBracket)));
+        JSON.parse(JSON.stringify(bracketService.createUnsortedBracket())).should.deep.equal(JSON.parse(JSON.stringify(correctBracket)));
       })
   })
 

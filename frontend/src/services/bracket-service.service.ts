@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Tournament } from '../classes/Tournament';
 import { Contestant } from '../classes/Contestant';
 import { Matchup } from '../classes/Matchup';
-import { matchesGlob } from 'path/win32';
 
 @Injectable({
   providedIn: 'root'
@@ -77,35 +76,23 @@ export class BracketService {
     //calculate bye matchups
     for (let i = 0; i < byeCount; i++) {
       let contestant: Contestant | undefined = contestantsCopy.shift();
-      let matchup: Matchup = new Matchup(1, this.matchupSpot, contestant);
+      let matchup: Matchup = new Matchup(1, this.matchupSpot++, contestant);
       byeMatchups.push(matchup);
-      this.matchupSpot++;
     }
     firstRoundMatchups.push(...byeMatchups);
     //create real first round matchups
     for (let i = 0; i < contestantsCopy.length; i += 2) {
       let contestant1: Contestant | undefined = contestantsCopy[i];
       let contestant2: Contestant | undefined = contestantsCopy[i + 1];
-      let matchup: Matchup = new Matchup(1, this.matchupSpot, contestant1, contestant2);
-      this.matchupSpot++;
+      let matchup: Matchup = new Matchup(1, this.matchupSpot++, contestant1, contestant2);
       firstRoundMatchups.push(matchup);
     }
     return firstRoundMatchups;
   }
 
-  public createUnsortedBracket(): void {
-    let currentRound: Matchup[] = this.createFirstRoundMatchups();
-    let previousRound: Matchup[] = [];
+  public createUnsortedBracket(): Matchup[] {
 
-    //TODO: implemenet
-    for (let round = 0; round < this.calculateRoundCount(); round++) {
-
-
-
-    }
-
-
-
-
+    //TODO: implement
+    return [];
   }
 }

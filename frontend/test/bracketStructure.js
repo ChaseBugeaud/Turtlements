@@ -40,7 +40,7 @@ describe('Bracket Skeleton Structure', function () {
             var tournament = new Tournament_1.Tournament("Epic Tournament", "fun", cArr, datetime);
             var bracketService = new bracket_service_service_1.BracketService(tournament);
             bracketService.createUnsortedBracket();
-            JSON.parse(JSON.stringify(tournament.getBracket())).should.deep.equal(JSON.parse(JSON.stringify(correctBracket)));
+            JSON.parse(JSON.stringify(bracketService.createUnsortedBracket())).should.deep.equal(JSON.parse(JSON.stringify(correctBracket)));
         });
     });
     describe('Unsorted Order - 5 Contestants', function () {
@@ -74,8 +74,7 @@ describe('Bracket Skeleton Structure', function () {
             var datetime = new Date();
             var tournament = new Tournament_1.Tournament("Epic Tournament", "fun", cArr, datetime);
             var bracketService = new bracket_service_service_1.BracketService(tournament);
-            bracketService.createUnsortedBracket();
-            JSON.parse(JSON.stringify(tournament.getBracket())).should.deep.equal(JSON.parse(JSON.stringify(correctBracket)));
+            JSON.parse(JSON.stringify(bracketService.createUnsortedBracket())).should.deep.equal(JSON.parse(JSON.stringify(correctBracket)));
         });
     });
     describe('1 Contestant', function () {

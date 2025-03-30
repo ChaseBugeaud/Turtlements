@@ -110,22 +110,44 @@ var BracketService = function () {
             //calculate bye matchups
             for (var i = 0; i < byeCount; i++) {
                 var contestant = contestantsCopy.shift();
-                var matchup = new Matchup_1.Matchup(1, this.matchupSpot, contestant);
+                var matchup = new Matchup_1.Matchup(1, this.matchupSpot++, contestant);
                 byeMatchups.push(matchup);
-                this.matchupSpot++;
             }
             firstRoundMatchups.push.apply(firstRoundMatchups, byeMatchups);
             //create real first round matchups
             for (var i = 0; i < contestantsCopy.length; i += 2) {
                 var contestant1 = contestantsCopy[i];
                 var contestant2 = contestantsCopy[i + 1];
-                var matchup = new Matchup_1.Matchup(1, this.matchupSpot, contestant1, contestant2);
-                this.matchupSpot++;
+                var matchup = new Matchup_1.Matchup(1, this.matchupSpot++, contestant1, contestant2);
                 firstRoundMatchups.push(matchup);
             }
             return firstRoundMatchups;
         };
         BracketService_1.prototype.createUnsortedBracket = function () {
+            var firstRound = this.createFirstRoundMatchups();
+            var previousRound = firstRound;
+            var currentRound = [];
+            for (var round = 1; round < this.calculateRoundCount(); round++) {
+                for (var prevRoundIndex = 0; prevRoundIndex < previousRound.length; prevRoundIndex += 2) {
+                    var prevMatchup1 = previousRound[prevRoundIndex];
+                    var prevMatchup2 = previousRound[prevRoundIndex + 1];
+                    if (previousRound[prevRoundIndex].isBye()) {
+                        var prevContestant = prevMatchup1.getContestant1();
+                        var newMatchup = new Matchup_1.Matchup(1, this.matchupSpot++, prevContestant);
+                        prevMatchup1.setParent(newMatchup);
+                        prevMatchup2.setParent(newMatchup);
+                        currentRound.push(newMatchup);
+                    }
+                    else {
+                        var newMatchup = new Matchup_1.Matchup(1, this.matchupSpot++);
+                        currentRound.push(newMatchup);
+                    }
+                }
+                previousRound = currentRound;
+                console.log("\n\n\ncurrent round\n", currentRound);
+                currentRound = [];
+            }
+            return firstRound;
         };
         return BracketService_1;
     }());

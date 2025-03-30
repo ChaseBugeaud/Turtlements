@@ -6,6 +6,7 @@ export class Matchup {
   private contestant1?: Contestant;
   private contestant2?: Contestant;
   private games: Game[];
+  private bye: boolean;
   private parent?: Matchup;
   private spot?: number;
   private winner?: Contestant;
@@ -16,6 +17,12 @@ export class Matchup {
     }
     if (contestant2) {
       this.contestant2 = contestant2;
+    }
+    //determine if it is a bye or not
+    if ((contestant1 && !contestant2) || (!contestant1 && contestant2)) {
+      this.bye = true;
+    } else {
+      this.bye = false;
     }
     this.bestOfCount = bestOfCount;
     this.games = [];
@@ -61,6 +68,10 @@ export class Matchup {
 
   public getParent(): Matchup | undefined {
     return this.parent;
+  }
+
+  public isBye(): boolean {
+    return this.bye;
   }
 
   //Setters
