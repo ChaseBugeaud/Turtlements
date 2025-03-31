@@ -3,22 +3,28 @@ import { Game } from "./Game";
 
 export class Matchup {
   private bestOfCount: number;
-  private contestant1: Contestant;
+  private contestant1?: Contestant;
   private contestant2?: Contestant;
   private games: Game[];
+  private spot?: number;
   private winner?: Contestant;
 
-  constructor(bestOfCount: number, contestant1: Contestant, contestant2?: Contestant) {
-    this.contestant1 = contestant1;
+  constructor(bestOfCount: number, spot?: number, contestant1?: Contestant, contestant2?: Contestant) {
+    if (contestant1) {
+      this.contestant1 = contestant1;
+    }
     if (contestant2) {
       this.contestant2 = contestant2;
     }
     this.bestOfCount = bestOfCount;
     this.games = [];
+    if (spot) {
+      this.spot = spot;
+    }
   }
 
   //Getters
-  public getContestant1(): Contestant {
+  public getContestant1(): Contestant | undefined {
     return this.contestant1;
   }
 
@@ -39,6 +45,10 @@ export class Matchup {
       this.winner = this.contestant1;
     }
     return this.winner!;
+  }
+
+  public getSpot(): number | undefined {
+    return this.spot;
   }
 
   //Setters
@@ -88,6 +98,10 @@ export class Matchup {
 
   public setWinner(winner: Contestant): void {
     this.winner = winner;
+  }
+
+  public setSpot(spot: number): void {
+    this.spot = spot;
   }
 
   //Other functions

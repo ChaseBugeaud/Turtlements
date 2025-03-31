@@ -4,13 +4,21 @@
   "description": "Backend for Turtlements",
   "license": "ISC",
   "author": "Syntax Sorcerers",
-  "type": "commonjs",
+  "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "dependencies": {
     "@types/express": "^5.0.0",
-    "express": "^4.21.2"
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "ts-node": "^10.9.2"
+  },
+  "devDependencies": {
+    "chai": "^5.2.0",
+    "faker": "^6.6.6",
+    "mocha": "^11.1.0",
+    "sinon": "^19.0.2"
   }
 }
