@@ -51,6 +51,9 @@ var Tournament = /** @class */ (function () {
     Tournament.prototype.setContestants = function (contestants) {
         this.contestants = contestants;
     };
+    Tournament.prototype.addContestant = function (contestant) {
+        this.contestants.push(contestant);
+    };
     Tournament.prototype.setStartDate = function (startDate) {
         this.startDate = startDate;
     };

@@ -31,10 +31,7 @@ export class TournamentComponent {
 
   isFilledOut(parameter: any): boolean{
     //checks if field is empty
-    if(parameter == null || parameter === ''){
-      return false;
-    }
-    return true;
+    return parameter != null && parameter != '';
   }
 
   addDetailsToTournament(title: string, desc: string, prize: string, start: Date, end: Date): void {
