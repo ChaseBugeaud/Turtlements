@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Tournament } from '../classes/Tournament';
 import { Contestant } from '../classes/Contestant';
 import { Matchup } from '../classes/Matchup';
+import { log } from 'console';
 
 @Injectable({
   providedIn: 'root'
@@ -92,9 +93,32 @@ export class BracketService {
     return firstRoundMatchups;
   }
 
-  public createUnsortedBracket(): Matchup[] {
+  public createSkeletonBracket(): Matchup[][] {
+    let returnBracket: Matchup[][] = [];
+    returnBracket.push(this.createFirstRoundMatchups());
+    const MAX_ROUNDS: number = this.calculateRoundCount();
+    for (let round = 1; round < MAX_ROUNDS - 1; round++) {
+      returnBracket[round] = [];
+      for (let i = 0; i < returnBracket[round - 1].length; i += 2) {
+        let newMatchup: Matchup = new Matchup(1, this.matchupSpot++);
 
-    //TODO: implement
-    return [];
+        //account for bye rounds - they only happen on first round
+        if (returnBracket[round - 1][i].isBye()) {
+          newMatchup.setContestant1(returnBracket[round - 1][i].getContestant1()!);
+        }
+        if (returnBracket[round - 1][i + 1] && returnBracket[round - 1][i + 1].isBye()) {
+          newMatchup.setContestant2(returnBracket[round - 1][i + 1].getContestant1()!);
+        }
+        returnBracket[round - 1][i].setParent(newMatchup);
+        returnBracket[round - 1][i + 1].setParent(newMatchup);
+        returnBracket[round].push(newMatchup);
+      }
+    }
+
+    //create winner matchup and assign it as a parent to the last matchup
+    let winner: Matchup = new Matchup(1, this.matchupSpot++);
+    returnBracket[returnBracket.length - 1][0].setParent(winner);
+    returnBracket.push([winner]);
+    return returnBracket;
   }
 }

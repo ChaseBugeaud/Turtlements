@@ -63,9 +63,11 @@ var BracketService = function () {
             if (this.numContestants < 2)
                 throw new Error("InsufficientContestants");
             if (this.ceilPowerOf2() === this.numContestants) {
+                //if the number of contestants are a power of 2, no byes needed
                 return 0;
             }
             else {
+                //if the number of contestants aren't a power of 2, byes are calculated
                 return this.ceilPowerOf2() - this.numContestants;
             }
         };
@@ -123,31 +125,31 @@ var BracketService = function () {
             }
             return firstRoundMatchups;
         };
-        BracketService_1.prototype.createUnsortedBracket = function () {
-            var firstRound = this.createFirstRoundMatchups();
-            var previousRound = firstRound;
-            var currentRound = [];
-            for (var round = 1; round < this.calculateRoundCount(); round++) {
-                for (var prevRoundIndex = 0; prevRoundIndex < previousRound.length; prevRoundIndex += 2) {
-                    var prevMatchup1 = previousRound[prevRoundIndex];
-                    var prevMatchup2 = previousRound[prevRoundIndex + 1];
-                    if (previousRound[prevRoundIndex].isBye()) {
-                        var prevContestant = prevMatchup1.getContestant1();
-                        var newMatchup = new Matchup_1.Matchup(1, this.matchupSpot++, prevContestant);
-                        prevMatchup1.setParent(newMatchup);
-                        prevMatchup2.setParent(newMatchup);
-                        currentRound.push(newMatchup);
+        BracketService_1.prototype.createSkeletonBracket = function () {
+            var returnBracket = [];
+            returnBracket.push(this.createFirstRoundMatchups());
+            var MAX_ROUNDS = this.calculateRoundCount();
+            for (var round = 1; round < MAX_ROUNDS - 1; round++) {
+                returnBracket[round] = [];
+                for (var i = 0; i < returnBracket[round - 1].length; i += 2) {
+                    var newMatchup = new Matchup_1.Matchup(1, this.matchupSpot++);
+                    //account for bye rounds - they only happen on first round
+                    if (returnBracket[round - 1][i].isBye()) {
+                        newMatchup.setContestant1(returnBracket[round - 1][i].getContestant1());
                     }
-                    else {
-                        var newMatchup = new Matchup_1.Matchup(1, this.matchupSpot++);
-                        currentRound.push(newMatchup);
+                    if (returnBracket[round - 1][i + 1] && returnBracket[round - 1][i + 1].isBye()) {
+                        newMatchup.setContestant2(returnBracket[round - 1][i + 1].getContestant1());
                     }
+                    returnBracket[round - 1][i].setParent(newMatchup);
+                    returnBracket[round - 1][i + 1].setParent(newMatchup);
+                    returnBracket[round].push(newMatchup);
                 }
-                previousRound = currentRound;
-                console.log("\n\n\ncurrent round\n", currentRound);
-                currentRound = [];
             }
-            return firstRound;
+            //create winner matchup and assign it as a parent to the last matchup
+            var winner = new Matchup_1.Matchup(1, this.matchupSpot++);
+            returnBracket[returnBracket.length - 1][0].setParent(winner);
+            returnBracket.push([winner]);
+            return returnBracket;
         };
         return BracketService_1;
     }());

@@ -61,11 +61,9 @@ export class Matchup {
     }
     return this.winner!;
   }
-
   public getSpot(): number | undefined {
     return this.spot;
   }
-
   public getParent(): Matchup | undefined {
     return this.parent;
   }
@@ -129,6 +127,10 @@ export class Matchup {
 
   public setParent(parent: Matchup): void {
     this.parent = parent;
+  }
+
+  public setBye(byeStatus: boolean): void {
+    this.bye = byeStatus;
   }
 
 }

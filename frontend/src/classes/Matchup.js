@@ -110,6 +110,9 @@ var Matchup = /** @class */ (function () {
     Matchup.prototype.setParent = function (parent) {
         this.parent = parent;
     };
+    Matchup.prototype.setBye = function (byeStatus) {
+        this.bye = byeStatus;
+    };
     return Matchup;
 }());
 exports.Matchup = Matchup;
