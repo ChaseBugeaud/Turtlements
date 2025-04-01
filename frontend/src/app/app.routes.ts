@@ -9,4 +9,3 @@ export const routes: Routes = [
   { path: 'tournament', component: TournamentComponent },
 
 ];
-console.log('Registered Routes:', routes);

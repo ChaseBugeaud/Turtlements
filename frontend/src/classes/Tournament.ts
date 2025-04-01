@@ -7,7 +7,7 @@ export class Tournament {
   private startDate: Date;
   private endDate?: Date;
   private matchups: Matchup[];
-  private bracket: Matchup[];
+  private bracket: Matchup[][];
   private prize?: string | number;
 
   constructor(
@@ -61,7 +61,7 @@ export class Tournament {
     return this.prize!;
   }
 
-  public getBracket(): Matchup[] {
+  public getBracket(): Matchup[][] {
     return this.bracket;
   }
 
@@ -98,7 +98,7 @@ export class Tournament {
     this.prize = prize;
   }
 
-  public setBracket(bracket: Matchup[]) {
+  public setBracket(bracket: Matchup[][]) {
     this.bracket = bracket;
   }
 

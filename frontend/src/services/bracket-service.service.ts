@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Tournament } from '../classes/Tournament';
 import { Contestant } from '../classes/Contestant';
 import { Matchup } from '../classes/Matchup';
-import { log } from 'console';
 
 @Injectable({
   providedIn: 'root'
