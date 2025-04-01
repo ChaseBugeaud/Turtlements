@@ -12,15 +12,15 @@ import { LoginService } from "../../services/login.service";
   providers: [LoginService]
 })
 export class LoginComponent {
-  private username: string = "";
-  private password: string = "";
+  public username: string = "";
+  public password: string = "";
   private loginService = inject(LoginService);
 
-  private get getUsername(): string {
+  public get getUsername(): string {
     return this.username;
   }
 
-  private get getPassword(): string {
+  public get getPassword(): string {
     return this.password;
   }
 
