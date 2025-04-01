@@ -41,7 +41,7 @@ app.post("/logintest", async (req, res) => {
     await db.transaction(async (tx) => {
       const creds = tx.select().from(schema.admins).where(sql`${schema.admins.username} = ${username} and ${schema.admins.password} = SHA256(${password})`)[0]
       if (creds) res.status(200).json({ success: true });
-    }
+    })
   } catch (err) {
     res.status(401).json({ success: false });
   }
