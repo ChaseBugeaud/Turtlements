@@ -31,6 +31,18 @@ app.get("/", (req, res) => {
   res.send("Hello World!")
 })
 
+// POST test to make sure credentials are sent and return correct value
+app.post("/logintest", (req, res) => {
+  console.log(req.body);
+  const { username, password } = req.body;
+
+  if (username == "lilturney" && password == "letmein") {
+    res.status(200).json({ success: true });
+  } else {
+    res.status(401).json({ success: false });
+  }
+})
+
 app.post("/tournaments/create", async (req, res) => {
   try {
     await db.transaction(async (tx) => {

@@ -16,23 +16,37 @@ export class LoginComponent {
   public password: string = "";
   private loginService = inject(LoginService);
 
-  //constructor(private loginService: LoginService) { }
-  //Need Submissions button function
-  //1. create JSON object with data
-  //2. send data to API
+  get userName(): string {
+    return this.username;
+  }
+
+  get passWord(): string {
+    return this.password;
+  }
+
+  set userName(username: string) {
+    this.username = username;
+  }
+
+  set passWord(password: string) {
+    this.password = password;
+  }
+
   onSubmit() {
-    const credentials = { username: this.username, password: this.password };
-    //console.log(credentials);
-    //return credentials;
+    const credentials = { username: this.userName, password: this.passWord };
+
     this.loginService.login(credentials).subscribe(
       (response) => {
-        console.log("You have successfully logged in!", response);
+        if (response.success) {
+          console.log("You have successfully logged in!");
         //Here we would handle the response from API and then update page
+        } else {
+          console.log("You ain't Lil Turney!");
+        }
       },
       (error) => {
-        console.log("You ain't Lil Turney!", error);
-        ////Here we would handle the error with a message
+        console.log("NetworkError", error);
+        //Here we would handle the error with a message
       });
-    //this.loginService.getTest();
   }
 }
