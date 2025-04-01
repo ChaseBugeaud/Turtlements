@@ -4,6 +4,7 @@ import { drizzle } from "drizzle-orm/node-postgres"
 import { seed } from "drizzle-seed"
 import { tournaments, contestants, sponsors, scores, matchups } from "./db/schema.ts"
 import * as schema from "./db/schema.ts"
+import { and, eq, sql } from "drizzle-orm"
 
 dotenv.config()
 
@@ -32,13 +33,15 @@ app.get("/", (req, res) => {
 })
 
 // POST test to make sure credentials are sent and return correct value
-app.post("/logintest", (req, res) => {
+app.post("/logintest", async (req, res) => {
   console.log(req.body);
   const { username, password } = req.body;
 
-  if (username == "lilturney" && password == "letmein") {
+  try {
+    await db.transaction(async (tx) => {
+      const creds = tx.select().from(schema.admins).where(sql`${schema.admins.username} = ${username} and ${schema.admins.password} = SHA256(${password})`)
     res.status(200).json({ success: true });
-  } else {
+  } catch (err) {
     res.status(401).json({ success: false });
   }
 })

@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm"
-import { integer, pgTable, varchar, date } from "drizzle-orm/pg-core"
+import { integer, pgTable, varchar, date, text } from "drizzle-orm/pg-core"
 
 export const tournaments = pgTable("tournament", {
     id: integer().primaryKey().generatedAlwaysAsIdentity(),
@@ -55,4 +55,10 @@ export const scores = pgTable("score", {
     score: integer().notNull(),
     matchup_id: integer().notNull().references(() => matchups.id),
     contestant_id: integer().notNull().references(() => contestants.id)
+})
+
+export const admins = pgTable("admin", {
+    id: integer().primaryKey().generatedAlwaysAsIdentity(),
+    username: varchar({ length: 40 }).notNull(),
+    password: text().notNull()
 })
