@@ -12,34 +12,26 @@ import { LoginService } from "../../services/login.service";
   providers: [LoginService]
 })
 export class LoginComponent {
-  public username: string = "";
-  public password: string = "";
+  private username: string = "";
+  private password: string = "";
   private loginService = inject(LoginService);
 
-  get userName(): string {
+  private get getUsername(): string {
     return this.username;
   }
 
-  get passWord(): string {
+  private get getPassword(): string {
     return this.password;
   }
 
-  set userName(username: string) {
-    this.username = username;
-  }
-
-  set passWord(password: string) {
-    this.password = password;
-  }
-
   onSubmit() {
-    const credentials = { username: this.userName, password: this.passWord };
+    const credentials = { username: this.getUsername, password: this.getPassword };
 
     this.loginService.login(credentials).subscribe(
       (response) => {
         if (response.success) {
           console.log("You have successfully logged in!");
-        //Here we would handle the response from API and then update page
+          //Here we would handle the response from API and then update page
         } else {
           console.log("You ain't Lil Turney!");
         }

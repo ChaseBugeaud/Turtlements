@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -7,12 +7,20 @@ import { Observable } from 'rxjs';
 })
 export class LoginService {
 
-  private apiUrl = 'http://localhost:3000';
+  private apiUrl: string;
+  private corsHeaders: HttpHeaders;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.apiUrl = 'http://localhost:3000';
+    this.corsHeaders = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Access-Control-Allow-Origin': 'http://localhost:4200'
+    });
+  }
 
   login(credentials: { username: string; password: string }): Observable<any> {
-    return this.http.post(this.apiUrl + '/users', credentials); // Send to API
+    return this.http.post(this.apiUrl + '/logintest', credentials);
   }
 
 }
