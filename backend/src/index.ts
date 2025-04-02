@@ -44,16 +44,11 @@ app.post("/logintest", async (req, res) => {
 
   try {
     const creds = await db.select().from(admins)
-      .where(and(eq(admins.username, username), eq(admins.password, createHash("sha256").update(password).digest("hex"))))
-      // .then(res => res[0].username ?? null)
-    // if (creds) res.status(200).json({ success: true });
+      .where(and(eq(admins.username, username), eq(admins.password, "\\x" + createHash("sha256").update(password).digest("hex"))))
+      .then(res => res[0].username ?? null)
     console.log(creds)
     // console.log("pass: " + crypto.SHA256(password))
-    if (creds) {
-      console.log("yo")
-    } else {
-      console.log("no")
-    }
+    if (creds) res.status(200).json({ success: true });
   } catch (err) {
     console.error(err)
     res.status(401).json({ success: false });
