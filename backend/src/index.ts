@@ -5,6 +5,7 @@ import { seed } from "drizzle-seed"
 import { tournaments, contestants, sponsors, scores, matchups } from "./db/schema.ts"
 import * as schema from "./db/schema.ts"
 import { and, eq, sql } from "drizzle-orm"
+import cors from "cors"
 
 dotenv.config()
 
@@ -27,6 +28,7 @@ const db = drizzle({
 })
 
 app.use(express.json())
+app.use(cors())
 
 app.get("/", (req, res) => {
   res.send("Hello World!")
