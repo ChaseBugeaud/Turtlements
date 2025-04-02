@@ -6,9 +6,9 @@ import { tournaments, contestants, sponsors, scores, matchups, admins } from "./
 import * as schema from "./db/schema.ts"
 import { and, eq, sql } from "drizzle-orm"
 import cors from "cors"
+import { createHash } from "crypto"
 
 dotenv.config()
-
 const pg_user = process.env.PG_USER
 const pg_pass = process.env.PG_PASS
 const pg_host = process.env.PG_HOST
@@ -38,13 +38,17 @@ app.get("/", (req, res) => {
 app.post("/logintest", async (req, res) => {
   console.log(req.body);
   const { username, password } = req.body;
+  // console.log("username: " + username)
+  // console.log("password: " + password)
+  console.log("crypt: " + createHash("sha256").update(password).digest("hex"))
 
   try {
     const creds = await db.select().from(admins)
-      .where(sql`${admins.username} = '${username}' and ${admins.password} = SHA256('${password}')`)
-      .then(res => res[0].username ?? null)
+      .where(and(eq(admins.username, username), eq(admins.password, createHash("sha256").update(password).digest("hex"))))
+      // .then(res => res[0].username ?? null)
     // if (creds) res.status(200).json({ success: true });
     console.log(creds)
+    // console.log("pass: " + crypto.SHA256(password))
     if (creds) {
       console.log("yo")
     } else {
