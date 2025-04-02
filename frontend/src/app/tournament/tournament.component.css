@@ -1,13 +1,15 @@
 body {
 	background-color:#49614D !important;
-	padding:0;
-  margin: 0;
+	padding:50px 100;
 }
 
 /*Style for Page-Title*/
 #pageTitle {
 	text-align:center;
-	margin:50px;
+	background-color:#B0B9A8;
+	border-style:double;
+	border-width:10px;
+	border-color:#9D9765;
 }
 #pageTitle h1 {
 	font-size:40px;
@@ -18,31 +20,47 @@ body {
 }
 
 /*Style for Section-Headers*/
-#tdHeader, #spHeader, #cdHeader {
+#tdHeader, #cdHeader {
 	background-color:#9D9765;
 	padding:10px;
 	margin-bottom:0px;
 }
 
 /*Style for Section-Forms*/
-.tdForm, #spForm, #cdForm {
+.tdForm, .cdForm {
 	background-color:#B0B9A8;
 	border-style:double;
 	border-color:#9D9765;
+	padding:10px;
 }
 label {
+	margin-left:15px;
+}
+input {
 	margin-right:15px;
+	float:right;
 }
-
-.row {
-	padding:15px !important;
-	display: flex;
-}
-
 .contestant{
-  background-color: grey;
-  height: 50px;
-  width: 100%;
-  border-bottom: 1px solid black;
-
+  background-color:#9D9765;
+  height:50px;
+  width:100%;
+  border-bottom:1px solid black;
+}
+li {
+	list-style-type:none
+}
+.btn {
+	color:#FFFFFF;
+	font-weight:200;
+	text-decoration:none;
+	text-transform:uppercase;
+	padding:8px 30px;
+	text-align:center;
+	clip-path:polygon(10% 0, 90% 0, 100% 50%, 90% 100%, 10% 100%, 0 50%);
+	background-color:#9D9765;
+	border-style:none;
+	transition:transform 0.3s ease;
+}
+.btn:hover {
+	transform:scale(1.05); /* Slightly increase the size (5%) on hover */
 }
