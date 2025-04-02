@@ -1,77 +1,70 @@
-<body>
-
-  <div id="pageTitle">
-    <h1>NEW TOURNAMENT</h1>
-    <p>Fields marked with an * are required!</p>
-  </div><!--Close pageTitle-->
-  <div id=" tournamentDetails">
-    <div id="tdTitleBar">
-      <h3 id="tdHeader">Tournament Details<i onclick="toggleSection(tdForm, this)" class="bi bi-caret-down-fill"
-          style="float:right;"></i></h3>
-    </div><!--Close tdTitleBar-->
-    <div id="tdForm" class="container-fluid">
-      <div class="row">
-        <div class="col">
+<html>
+  <body>
+    <div id="pageTitle">
+      <h1>NEW TOURNAMENT</h1>
+      <p>Fields marked with an * are required!</p>
+    </div><!--Close pageTitle-->
+    <div id="tournamentDetails">
+      <div id="tdTitleBar">
+        <h3 id="tdHeader">Tournament Details</h3>
+      </div><!--Close tdTitleBar-->
+      <div class="tdForm">
+        <div>
           <label for="t_title">Tournament Title:</label>
-        </div><!--Close Col1-->
-        <div class="col">
           <input type="text" #t_title name="t_title">
-        </div><!--Close Col2-->
-      </div><!--Close Row1-->
-      <div class="row">
-        <div class="col">
-          <label for="t_desc">Tournament Description:</label>
-        </div><!--Close Col1-->
-        <div class="col">
-          <input type="text" #t_desc name="t_desc">
-        </div><!--Close Col2-->
-      </div><!--Close Row2-->
-      <div class="row">
-        <div class="col">
-          <label for="t_prize">Tournament Prize:</label>
-        </div><!--Close Col1-->
-        <div class="col">
-          <input type="text" #t_prize name="t_prize">
-        </div><!--Close Col2-->
-      </div><!--Close Row3-->
-      <div class="row">
-        <div class="col">
-          <label for="t_start">Start Date:</label>
-        </div><!--Close Col1-->
-        <div class="col">
-          <input type="Date" #t_start name="t_start">
-        </div><!--Close Col2-->
-      </div><!--Close Row4-->
-      <div class="row">
-        <div class="col">
-          <label for="t_end">End Date:</label>
-        </div><!--Close Col1-->
-        <div class="col">
-          <input type="Date" #t_end name="t_end">
-        </div><!--Close Col2-->
-      </div><!--Close Row5-->
-    </div><!--Close tdForm-->
-  </div><!--Close tournamentDetails-->
-
-
-  <div id="contestantDetails">
-    <div class="cdTitleBar">
-      <h3 id="cdHeader">Contestant Details<i onclick="toggleSection(cdForm, this)" class="bi bi-caret-down-fill"
-          style="float:right;"></i></h3>
-    </div><!--Close cdTitleBar-->
-    <label for="team-name">Team Name:</label>
-    <input type="text" name="team-name" #teamName>
-    <label for="team-logo">Logo:</label>
-    <input type="file" name="team-logo">
-    <input type="button" name="add-contestant" value="Add Contestant"
-      (click)="addContestantToTournament(teamName.value)">
-    <div class="team-container">
-      <li *ngFor="let contestant of tournament.getContestants()" class="team-list">
-        <div class="contestant">
-          {{contestant.getName()}}
         </div>
-      </li>
-    </div>
-  </div><!--Close contestantDetails-->
-  <input type="button" name="submit-form" value="Create Tournament"
-    (click)="addDetailsToTournament(t_title.value,t_desc.value,t_prize.value,stringToDate(t_start.value),stringToDate(t_end.value))">
+        <br>
+        <div>
+          <label for="t_desc">Tournament Description:</label>
+          <input type="text" #t_desc name="t_desc">
+        </div>
+        <br>
+        <div>
+          <label for="t_prize">Tournament Prize:</label>
+          <input type="text" #t_prize name="t_prize">
+        </div>
+        <br>
+        <div>
+          <label for="t_start">Start Date:</label>
+          <input type="Date" #t_start name="t_start">
+        </div>
+        <br>
+        <div>
+          <label for="t_end">End Date:</label>
+          <input type="Date" #t_end name="t_end">
+        </div>
+
+      </div><!--Close tdForm-->
+    </div><!--Close tournamentDetails-->
+
+    <div id="contestantDetails">
+      <div class="cdTitleBar">
+        <h3 id="cdHeader">Contestant Details<i onclick="toggleSection(cdForm, this)" class="bi bi-caret-down-fill" style="float:right;"></i></h3>
+      </div><!--Close cdTitleBar-->
+      <div class="cdForm">
+        <div>
+          <label for="team-name">Team Name:</label>
+          <input type="text" name="team-name" #teamName>
+        </div>
+        <br>
+        <div>
+          <label for="team-logo">Logo:</label>
+          <input type="file" name="team-logo">
+        </div>
+        <br>
+        <input class="btn" type="button" name="add-contestant" value="Add Contestant" (click)="addContestantToTournament(teamName.value)">
+        <br><br>
+        <div class="team-container">
+          <li *ngFor="let contestant of tournament.getContestants()" class="team-list">
+            <div class="contestant">
+              {{contestant.getName()}}
+            </div>
+          </li>
+        </div>
+      </div>
+    </div><!--Close contestantDetails-->
+    <br>
+    <input class="btn" type="button" name="submit-form" value="Create Tournament" (click)="addDetailsToTournament(t_title.value,t_desc.value,t_prize.value,stringToDate(t_start.value),stringToDate(t_end.value))">
+  </body>
+</html>
+    
