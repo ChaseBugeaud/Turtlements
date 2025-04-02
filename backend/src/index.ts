@@ -2,7 +2,7 @@ import dotenv from "dotenv"
 import express from "express"
 import { drizzle } from "drizzle-orm/node-postgres"
 import { seed } from "drizzle-seed"
-import { tournaments, contestants, sponsors, scores, matchups } from "./db/schema.ts"
+import { tournaments, contestants, sponsors, scores, matchups, admins } from "./db/schema.ts"
 import * as schema from "./db/schema.ts"
 import { and, eq, sql } from "drizzle-orm"
 import cors from "cors"
@@ -40,11 +40,18 @@ app.post("/logintest", async (req, res) => {
   const { username, password } = req.body;
 
   try {
-    await db.transaction(async (tx) => {
-      const creds = tx.select().from(schema.admins).where(sql`${schema.admins.username} = ${username} and ${schema.admins.password} = SHA256(${password})`)[0]
-      if (creds) res.status(200).json({ success: true });
-    })
+    const creds = await db.select().from(admins)
+      .where(sql`${admins.username} = '${username}' and ${admins.password} = SHA256('${password}')`)
+      .then(res => res[0].username ?? null)
+    // if (creds) res.status(200).json({ success: true });
+    console.log(creds)
+    if (creds) {
+      console.log("yo")
+    } else {
+      console.log("no")
+    }
   } catch (err) {
+    console.error(err)
     res.status(401).json({ success: false });
   }
 })
