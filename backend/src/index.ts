@@ -38,8 +38,6 @@ app.get("/", (req, res) => {
 app.post("/logintest", async (req, res) => {
   console.log(req.body);
   const { username, password } = req.body;
-  // console.log("username: " + username)
-  // console.log("password: " + password)
   console.log("crypt: " + createHash("sha256").update(password).digest("hex"))
 
   try {
@@ -47,7 +45,6 @@ app.post("/logintest", async (req, res) => {
       .where(and(eq(admins.username, username), eq(admins.password, "\\x" + createHash("sha256").update(password).digest("hex"))))
       .then(res => res[0].username ?? null)
     console.log(creds)
-    // console.log("pass: " + crypto.SHA256(password))
     if (creds) res.status(200).json({ success: true });
   } catch (err) {
     console.error(err)
