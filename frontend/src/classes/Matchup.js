@@ -14,8 +14,6 @@ var Matchup = /** @class */ (function () {
         if (spot) {
             this.spot = spot;
         }
-        this.leftChild = undefined;
-        this.rightChild = undefined;
     }
     //Getters
     Matchup.prototype.getContestant1 = function () {
@@ -23,14 +21,6 @@ var Matchup = /** @class */ (function () {
     };
     Matchup.prototype.getContestant2 = function () {
         return this.contestant2;
-    };
-    Matchup.prototype.getContestantCount = function () {
-        var count = 0;
-        if (this.contestant1)
-            count++;
-        if (this.contestant2)
-            count++;
-        return count;
     };
     Matchup.prototype.getBestOfCount = function () {
         return this.bestOfCount;
@@ -46,12 +36,6 @@ var Matchup = /** @class */ (function () {
     };
     Matchup.prototype.getSpot = function () {
         return this.spot;
-    };
-    Matchup.prototype.getLeftChild = function () {
-        return this.leftChild;
-    };
-    Matchup.prototype.getRightChild = function () {
-        return this.rightChild;
     };
     //Setters
     Matchup.prototype.setContestant1 = function (contestant1) {
@@ -101,12 +85,6 @@ var Matchup = /** @class */ (function () {
     };
     Matchup.prototype.setSpot = function (spot) {
         this.spot = spot;
-    };
-    Matchup.prototype.setLeftChild = function (leftChild) {
-        this.leftChild = leftChild;
-    };
-    Matchup.prototype.setRightChild = function (rightChild) {
-        this.rightChild = rightChild;
     };
     return Matchup;
 }());

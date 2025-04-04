@@ -53,7 +53,6 @@ var BracketService = function () {
             this.tournament = tournament;
             this.contestants = this.tournament.getContestants();
             this.numContestants = this.contestants.length;
-            this.matchupSpot = 0;
         }
         BracketService_1.prototype.ceilPowerOf2 = function () {
             //next power of 2 is Math.ceil(log2(numContestants))
@@ -74,13 +73,8 @@ var BracketService = function () {
                 throw new Error("InsufficientContestants");
             return this.ceilPowerOf2() - 1;
         };
-        BracketService_1.prototype.calculateFirstRoundMatchupCount = function () {
-            if (this.numContestants < 2)
-                throw new Error("InsufficientContestants");
-            return this.ceilPowerOf2() / 2;
-        };
         BracketService_1.prototype.sortContestants = function () {
-            if (this.contestants.length < 2)
+            if (this.contestants.length < 1)
                 throw new Error("InsufficientContestants");
             this.contestants.sort(this.seedCompare);
         };
@@ -95,33 +89,42 @@ var BracketService = function () {
                 return 0;
             }
         };
-        BracketService_1.prototype.createFirstRoundMatchups = function () {
-            if (this.numContestants < 2)
-                throw new Error("InsufficientContestants");
-            var firstRoundMatchups = [];
-            var contestantsCopy = JSON.parse(JSON.stringify(this.contestants));
-            var byeCount = this.calculateByes();
-            var firstRoundMatchupCount = this.calculateFirstRoundMatchupCount();
-            var byeMatchups = [];
-            //calculate bye matchups
-            for (var i = 0; i < byeCount; i++) {
-                var contestant = contestantsCopy.shift();
-                var matchup = new Matchup_1.Matchup(1, this.matchupSpot, contestant);
-                byeMatchups.push(matchup);
-                this.matchupSpot++;
-            }
-            firstRoundMatchups.push.apply(firstRoundMatchups, byeMatchups);
-            //create real first round matchups
-            for (var i = 0; i < contestantsCopy.length; i += 2) {
-                var contestant1 = contestantsCopy[i];
-                var contestant2 = contestantsCopy[i + 1];
-                var matchup = new Matchup_1.Matchup(1, this.matchupSpot, contestant1, contestant2);
-                this.matchupSpot++;
-                firstRoundMatchups.push(matchup);
-            }
-            return firstRoundMatchups;
-        };
         BracketService_1.prototype.createUnsortedBracket = function () {
+            //TODO: fix
+            if (this.numContestants < 2) {
+                throw new Error("InsufficientContestants");
+            }
+            var firstRound = [];
+            var contestantsCopy = JSON.parse(JSON.stringify(this.contestants));
+            var bracketSpot = 0;
+            var bracket = [];
+            //create byes
+            for (var i = 0; i < this.calculateByes(); i++, bracketSpot++) {
+                var c1 = contestantsCopy.shift();
+                var m = new Matchup_1.Matchup(1, bracketSpot, c1);
+                firstRound.push(m);
+            }
+            //calculate first round with instantiated contestants
+            for (var i = 0; contestantsCopy.length; i += 2, bracketSpot++) {
+                var c1 = contestantsCopy.shift();
+                var c2 = contestantsCopy.shift();
+                var m = new Matchup_1.Matchup(1, bracketSpot, c1, c2);
+                firstRound.push(m);
+            }
+            bracket.push(firstRound);
+            //create shell for bracket - empty matchups with no contestants
+            while (bracket.length < (this.ceilPowerOf2() / 2)) {
+                var previousRound = bracket[bracket.length - 1];
+                var matchupCount = Math.ceil(previousRound.length / 2);
+                var currentRound = [];
+                for (var j = 0; j < matchupCount; j++, bracketSpot++) {
+                    var m = new Matchup_1.Matchup(1, bracketSpot);
+                    currentRound.push(m);
+                }
+                bracket.push(currentRound);
+            }
+            //console.log("bracket\n", bracket)
+            this.tournament.setBracket(bracket);
         };
         return BracketService_1;
     }());
