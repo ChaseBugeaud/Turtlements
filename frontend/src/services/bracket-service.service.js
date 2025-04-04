@@ -106,7 +106,9 @@ var BracketService = function () {
             if (this.numContestants < 2)
                 throw new Error("InsufficientContestants");
             var firstRoundMatchups = [];
-            var contestantsCopy = JSON.parse(JSON.stringify(this.contestants));
+            //let contestantsCopy: Contestant[] = JSON.parse(JSON.stringify(this.contestants));
+            var contestantsCopy = this.contestants.map(function (c) { return c.clone(); });
+            console.log(contestantsCopy);
             var byeCount = this.calculateByes();
             var byeMatchups = [];
             //calculate bye matchups

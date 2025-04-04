@@ -9,6 +9,10 @@ export class Contestant {
     }
   }
 
+  clone(): Contestant {
+    return new Contestant(this.name, this.seed);
+  }
+
   //Getters
   public getName(): string {
     return this.name;

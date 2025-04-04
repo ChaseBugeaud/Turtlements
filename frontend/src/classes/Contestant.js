@@ -8,6 +8,9 @@ var Contestant = /** @class */ (function () {
             this.seed = seed;
         }
     }
+    Contestant.prototype.clone = function () {
+        return new Contestant(this.name, this.seed);
+    };
     //Getters
     Contestant.prototype.getName = function () {
         return this.name;

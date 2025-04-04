@@ -71,7 +71,9 @@ export class BracketService {
   public createFirstRoundMatchups(): Matchup[] {
     if (this.numContestants < 2) throw new Error("InsufficientContestants");
     let firstRoundMatchups: Matchup[] = [];
-    let contestantsCopy: Contestant[] = JSON.parse(JSON.stringify(this.contestants));
+    //let contestantsCopy: Contestant[] = JSON.parse(JSON.stringify(this.contestants));
+    let contestantsCopy: Contestant[] = this.contestants.map(c => c.clone());
+    console.log(contestantsCopy);
     let byeCount: number = this.calculateByes();
     let byeMatchups: Matchup[] = [];
 
