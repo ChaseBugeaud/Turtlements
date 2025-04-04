@@ -35,7 +35,7 @@ app.get("/", (req, res) => {
 })
 
 // POST test to make sure credentials are sent and return correct value
-app.post("/logintest", async (req, res) => {
+app.post("/login", async (req, res) => {
   console.log(req.body);
   const { username, password } = req.body;
   console.log("crypt: " + createHash("sha256").update(password).digest("hex"))
@@ -45,10 +45,10 @@ app.post("/logintest", async (req, res) => {
       .where(and(eq(admins.username, username), eq(admins.password, "\\x" + createHash("sha256").update(password).digest("hex"))))
       .then(res => res[0].username ?? null)
     console.log(creds)
-    if (creds) res.status(200).json({ success: true });
+    if (creds) res.status(200).json({ success: true })
   } catch (err) {
     console.error(err)
-    res.status(401).json({ success: false });
+    res.status(401).json({ success: false })
   }
 })
 
