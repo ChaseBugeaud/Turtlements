@@ -65,8 +65,3 @@ export const admins = pgTable("admin", {
     username: varchar({ length: 40 }).notNull(),
     password: text().notNull()
 })
-
-export const scoresRelations = relations(scores, ({ one }) => ({
-    contestant: one(contestants),
-    matchup: one(matchups)
-}))
