@@ -72,11 +72,11 @@ app.post("/tournaments/create", async (req, res) => {
   try {
     await db.transaction(async (tx) => {
       const tournamentId: number | null = await tx.insert(tournaments).values({
-        name: req.body.name,
-        description: req.body.description,
-        start_date: req.body.start_date,
-        end_date: req.body.end_date,
-        prize: req.body.prize
+        name: req.body.tournament.name,
+        description: req.body.tournament.description,
+        start_date: req.body.tournament.start_date,
+        end_date: req.body.tournament.end_date,
+        prize: req.body.tournament.prize
       })
         .returning({ tournament_id: tournaments.id })
         .then(res => res[0].tournament_id ?? null)
