@@ -14,8 +14,9 @@ describe('Format Tournament Submission For Backend', function () {
             var c3 = new Contestant_1.Contestant("Chase", 3);
             var c4 = new Contestant_1.Contestant("Danielle", 4);
             var cArr = [c1, c2, c3, c4];
-            var datetime = new Date();
-            var tournament = new Tournament_1.Tournament("epic", "super fun", cArr, datetime);
+            var startDate = new Date();
+            var endDate = new Date(2025, 5, 4, 15, 30, 0);
+            var tournament = new Tournament_1.Tournament("epic", "super fun", cArr, startDate, endDate);
             var bracketService = new bracket_service_service_1.BracketService(tournament);
             //let formatterService: TournamentSubmissionFormatterService = new TournamentSubmissionFormatterService;
             //make forced UUIDs for testing purposes
