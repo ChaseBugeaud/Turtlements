@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { NgFor } from '@angular/common';
 import { BracketService } from '../../services/bracket-service.service';
 import { Tournament } from '../../classes/Tournament';
@@ -11,7 +11,7 @@ import { Matchup } from '../../classes/Matchup';
   templateUrl: './render-bracket.component.html',
   styleUrl: './render-bracket.component.css'
 })
-export class RenderBracketComponent implements OnInit {
+export class RenderBracketComponent implements OnInit, AfterViewInit{
   tournament: Tournament;
   private startDate: Date;
   c1: Contestant;
@@ -20,8 +20,10 @@ export class RenderBracketComponent implements OnInit {
   c4: Contestant;
   c5: Contestant;
 
-
   rounds: any[] = [];
+
+  @ViewChild('title') titleElement!: ElementRef;
+  @ViewChild('desc') descElement!: ElementRef;
 
   constructor() {
     this.startDate = new Date();
@@ -32,11 +34,19 @@ export class RenderBracketComponent implements OnInit {
     this.c5 = new Contestant("Eric");
 
     this.tournament = new Tournament("name", "desc", [this.c1, this.c2, this.c3, this.c4, this.c5], this.startDate);
+
   }
 
   ngOnInit(): void {
     // Call renderBracket when the component is initialized
     this.renderBracket();
+  }
+
+  ngAfterViewInit(): void {
+    if (this.titleElement && this.descElement) {
+      this.titleElement.nativeElement.textContent = this.tournament.getName();
+      this.descElement.nativeElement.textContent = this.tournament.getDescription();
+    }
   }
 
   renderBracket(): void {

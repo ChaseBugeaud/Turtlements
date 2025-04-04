@@ -75,7 +75,6 @@ display: none;
   }
 }
 .bracket:last-of-type {
-  .contestant-item:before,
   .contestant-item:after {
 display: none;
   }
@@ -83,8 +82,14 @@ display: none;
 </style>
 </head>
 <body>
+
+    <!--Tournament Title-->
+    <h1 #title>Title</h1>
+    <!--Tournament Description-->
+    <h3 #desc>Description</h3>
+
     <!--Template Bracket-->
-    <div class="tournament-container">
+    <!--<div class="tournament-container">
         <ul class="bracket bracket-1">
             <li class="contestant-item">Contestant Name</li>
             <li class="contestant-item">Contestant Name</li>
@@ -108,13 +113,13 @@ display: none;
         <ul class="bracket bracket-4">
             <li class="contestant-item">Contestant Name</li>
         </ul>
-    </div>
+    </div>-->
 
+    <!--Bracket-->
     <div class="tournament-container" id="bracket-container">
-    <!-- Loop through each round -->
-        
+            <!-- Create ul for each round -->
             <ul *ngFor="let round of rounds" class="bracket" id="{{ round.name }}">
-                <!--<h3>{{ round.name }}</h3>-->
+                <!-- Create li for each contestant spot -->
                 <li *ngFor="let matchup of round.matchups"  class="contestant-item">
                     {{ matchup }}
                 </li>
