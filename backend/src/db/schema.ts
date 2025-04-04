@@ -51,8 +51,8 @@ export const sponsorsRelations = relations(sponsors, ({ one }) => ({
 export const matchups = pgTable("matchup", {
     id: integer().primaryKey().generatedAlwaysAsIdentity(),
     tournament_id: integer().notNull().references(() => tournaments.id),
-    contestant1: integer().references(() => contestants.id),
-    contestant2: integer().references(() => contestants.id)
+    contestant1_id: integer().references(() => contestants.id),
+    contestant2_id: integer().references(() => contestants.id)
 })
 
 export const matchupsRelations = relations(matchups, ({ one }) => ({
