@@ -83,10 +83,19 @@ app.post("/tournaments/create", async (req, res) => {
 
       for (const contestant of req.body.contestants) {
         await tx.insert(contestants).values({
+          id: contestant.id,
           name: contestant.name,
           logo: contestant.logo,
           seed: Number(contestant.seed),
           tournament_id: Number(tournamentId)
+        })
+      }
+
+      for (const matchup of req.body.matchups) {
+        await tx.insert(matchups).values({
+          tournament_id: Number(tournamentId),
+          contestant1_id: matchup.contestant1,
+          contestant2_id: matchup.contestant2,
         })
       }
 
