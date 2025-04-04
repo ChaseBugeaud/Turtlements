@@ -63,9 +63,11 @@ var BracketService = function () {
             if (this.numContestants < 2)
                 throw new Error("InsufficientContestants");
             if (this.ceilPowerOf2() === this.numContestants) {
+                //if the number of contestants are a power of 2, no byes needed
                 return 0;
             }
             else {
+                //if the number of contestants aren't a power of 2, byes are calculated
                 return this.ceilPowerOf2() - this.numContestants;
             }
         };
@@ -95,33 +97,59 @@ var BracketService = function () {
                 return 0;
             }
         };
+        BracketService_1.prototype.calculateRoundCount = function () {
+            if (this.contestants.length < 2)
+                throw new Error("InsufficientContestants");
+            return Math.log2(this.ceilPowerOf2()) + 1;
+        };
         BracketService_1.prototype.createFirstRoundMatchups = function () {
             if (this.numContestants < 2)
                 throw new Error("InsufficientContestants");
             var firstRoundMatchups = [];
             var contestantsCopy = JSON.parse(JSON.stringify(this.contestants));
             var byeCount = this.calculateByes();
-            var firstRoundMatchupCount = this.calculateFirstRoundMatchupCount();
             var byeMatchups = [];
             //calculate bye matchups
             for (var i = 0; i < byeCount; i++) {
                 var contestant = contestantsCopy.shift();
-                var matchup = new Matchup_1.Matchup(1, this.matchupSpot, contestant);
+                var matchup = new Matchup_1.Matchup(1, this.matchupSpot++, contestant);
                 byeMatchups.push(matchup);
-                this.matchupSpot++;
             }
             firstRoundMatchups.push.apply(firstRoundMatchups, byeMatchups);
             //create real first round matchups
             for (var i = 0; i < contestantsCopy.length; i += 2) {
                 var contestant1 = contestantsCopy[i];
                 var contestant2 = contestantsCopy[i + 1];
-                var matchup = new Matchup_1.Matchup(1, this.matchupSpot, contestant1, contestant2);
-                this.matchupSpot++;
+                var matchup = new Matchup_1.Matchup(1, this.matchupSpot++, contestant1, contestant2);
                 firstRoundMatchups.push(matchup);
             }
             return firstRoundMatchups;
         };
-        BracketService_1.prototype.createUnsortedBracket = function () {
+        BracketService_1.prototype.createSkeletonBracket = function () {
+            var returnBracket = [];
+            returnBracket.push(this.createFirstRoundMatchups());
+            var MAX_ROUNDS = this.calculateRoundCount();
+            for (var round = 1; round < MAX_ROUNDS - 1; round++) {
+                returnBracket[round] = [];
+                for (var i = 0; i < returnBracket[round - 1].length; i += 2) {
+                    var newMatchup = new Matchup_1.Matchup(1, this.matchupSpot++);
+                    //account for bye rounds - they only happen on first round
+                    if (returnBracket[round - 1][i].isBye()) {
+                        newMatchup.setContestant1(returnBracket[round - 1][i].getContestant1());
+                    }
+                    if (returnBracket[round - 1][i + 1] && returnBracket[round - 1][i + 1].isBye()) {
+                        newMatchup.setContestant2(returnBracket[round - 1][i + 1].getContestant1());
+                    }
+                    returnBracket[round - 1][i].setParent(newMatchup);
+                    returnBracket[round - 1][i + 1].setParent(newMatchup);
+                    returnBracket[round].push(newMatchup);
+                }
+            }
+            //create winner matchup and assign it as a parent to the last matchup
+            var winner = new Matchup_1.Matchup(1, this.matchupSpot++);
+            returnBracket[returnBracket.length - 1][0].setParent(winner);
+            returnBracket.push([winner]);
+            return returnBracket;
         };
         return BracketService_1;
     }());

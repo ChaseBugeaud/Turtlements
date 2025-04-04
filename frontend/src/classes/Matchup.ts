@@ -6,10 +6,10 @@ export class Matchup {
   private contestant1?: Contestant;
   private contestant2?: Contestant;
   private games: Game[];
+  private bye: boolean;
+  private parent?: Matchup;
   private spot?: number;
   private winner?: Contestant;
-  private leftChild: Matchup | undefined;
-  private rightChild: Matchup | undefined;
 
   constructor(bestOfCount: number, spot?: number, contestant1?: Contestant, contestant2?: Contestant) {
     if (contestant1) {
@@ -18,13 +18,17 @@ export class Matchup {
     if (contestant2) {
       this.contestant2 = contestant2;
     }
+    //determine if it is a bye or not
+    if ((contestant1 && !contestant2) || (!contestant1 && contestant2)) {
+      this.bye = true;
+    } else {
+      this.bye = false;
+    }
     this.bestOfCount = bestOfCount;
     this.games = [];
     if (spot) {
       this.spot = spot;
     }
-    this.leftChild = undefined;
-    this.rightChild = undefined;
   }
 
   //Getters
@@ -57,17 +61,15 @@ export class Matchup {
     }
     return this.winner!;
   }
-
   public getSpot(): number | undefined {
     return this.spot;
   }
-
-  public getLeftChild(): Matchup | undefined {
-    return this.leftChild;
+  public getParent(): Matchup | undefined {
+    return this.parent;
   }
 
-  public getRightChild(): Matchup | undefined {
-    return this.rightChild;
+  public isBye(): boolean {
+    return this.bye;
   }
 
   //Setters
@@ -123,13 +125,12 @@ export class Matchup {
     this.spot = spot;
   }
 
-  public setLeftChild(leftChild: Matchup | undefined): void {
-    this.leftChild = leftChild;
+  public setParent(parent: Matchup): void {
+    this.parent = parent;
   }
 
-  public setRightChild(rightChild: Matchup | undefined): void {
-    this.rightChild = rightChild;
+  public setBye(byeStatus: boolean): void {
+    this.bye = byeStatus;
   }
 
-  //Other functions
 }

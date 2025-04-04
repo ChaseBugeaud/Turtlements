@@ -24,7 +24,11 @@ export const contestants = pgTable("contestant", {
     tournament_id: integer().notNull().references(() => tournaments.id)
 })
 
-export const contestantsRelations = relations(contestants, ({ many }) => ({
+export const contestantsRelations = relations(contestants, ({ one, many }) => ({
+    tournament: one(tournaments, {
+        fields: [contestants.tournament_id],
+        references: [tournaments.id]
+    }),
     matchups: many(matchups)
 }))
 
@@ -38,7 +42,10 @@ export const sponsors = pgTable("sponsor", {
 })
 
 export const sponsorsRelations = relations(sponsors, ({ one }) => ({
-    tournament: one(tournaments)
+    tournament: one(tournaments, {
+        fields: [sponsors.tournament_id],
+        references: [tournaments.id]
+    })
 }))
 
 export const matchups = pgTable("matchup", {
@@ -58,3 +65,8 @@ export const admins = pgTable("admin", {
     username: varchar({ length: 40 }).notNull(),
     password: text().notNull()
 })
+
+export const scoresRelations = relations(scores, ({ one }) => ({
+    contestant: one(contestants),
+    matchup: one(matchups)
+}))

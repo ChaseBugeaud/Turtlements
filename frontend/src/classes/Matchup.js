@@ -9,13 +9,18 @@ var Matchup = /** @class */ (function () {
         if (contestant2) {
             this.contestant2 = contestant2;
         }
+        //determine if it is a bye or not
+        if ((contestant1 && !contestant2) || (!contestant1 && contestant2)) {
+            this.bye = true;
+        }
+        else {
+            this.bye = false;
+        }
         this.bestOfCount = bestOfCount;
         this.games = [];
         if (spot) {
             this.spot = spot;
         }
-        this.leftChild = undefined;
-        this.rightChild = undefined;
     }
     //Getters
     Matchup.prototype.getContestant1 = function () {
@@ -47,11 +52,11 @@ var Matchup = /** @class */ (function () {
     Matchup.prototype.getSpot = function () {
         return this.spot;
     };
-    Matchup.prototype.getLeftChild = function () {
-        return this.leftChild;
+    Matchup.prototype.getParent = function () {
+        return this.parent;
     };
-    Matchup.prototype.getRightChild = function () {
-        return this.rightChild;
+    Matchup.prototype.isBye = function () {
+        return this.bye;
     };
     //Setters
     Matchup.prototype.setContestant1 = function (contestant1) {
@@ -102,11 +107,11 @@ var Matchup = /** @class */ (function () {
     Matchup.prototype.setSpot = function (spot) {
         this.spot = spot;
     };
-    Matchup.prototype.setLeftChild = function (leftChild) {
-        this.leftChild = leftChild;
+    Matchup.prototype.setParent = function (parent) {
+        this.parent = parent;
     };
-    Matchup.prototype.setRightChild = function (rightChild) {
-        this.rightChild = rightChild;
+    Matchup.prototype.setBye = function (byeStatus) {
+        this.bye = byeStatus;
     };
     return Matchup;
 }());

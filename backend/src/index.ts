@@ -1,6 +1,7 @@
 import dotenv from "dotenv"
 import express from "express"
 import { drizzle } from "drizzle-orm/node-postgres"
+import { eq } from "drizzle-orm"
 import { seed } from "drizzle-seed"
 import { tournaments, contestants, sponsors, scores, matchups, admins } from "./db/schema.ts"
 import * as schema from "./db/schema.ts"
@@ -24,7 +25,8 @@ const db = drizzle({
     ssl: {
       rejectUnauthorized: false
     }
-  }
+  },
+  schema: schema
 })
 
 app.use(express.json())
@@ -49,13 +51,26 @@ app.post("/login", async (req, res) => {
   } catch (err) {
     console.error(err)
     res.status(401).json({ success: false })
+
+app.get("/tournaments/:tournamentId", async (req, res) => {
+  const tournamentId = Number(req.params.tournamentId)
+  try {
+    const tournament = await db.query.tournaments.findFirst({
+      where: eq(tournaments.id, tournamentId),
+      with: {
+        contestants: true,
+        sponsor: true
+      }
+    })
+    res.send(tournament)
+  } catch (err) {
+    res.send("Something went wrong! Error: " + err)
   }
 })
 
 app.post("/tournaments/create", async (req, res) => {
   try {
     await db.transaction(async (tx) => {
-      console.log(req.body)
       const tournamentId: number | null = await tx.insert(tournaments).values({
         name: req.body.name,
         description: req.body.description,
@@ -65,8 +80,6 @@ app.post("/tournaments/create", async (req, res) => {
       })
         .returning({ tournament_id: tournaments.id })
         .then(res => res[0].tournament_id ?? null)
-
-      console.log(tournamentId)
 
       for (const contestant of req.body.contestants) {
         await tx.insert(contestants).values({
@@ -87,8 +100,8 @@ app.post("/tournaments/create", async (req, res) => {
           tournament_id: Number(tournamentId)
         })
       }
+      res.redirect(`/tournaments/${tournamentId}`)
     })
-    res.send("Success!")
   } catch (err) {
     res.send("Error! Try again. Log: " + err)
   }
