@@ -52,8 +52,9 @@ export class RenderBracketComponent implements OnInit {
         console.log(matchups[x].getContestant1());
         console.log(matchups[x].getContestant2());
         console.log(this.c1);
-
-        if (matchups[x].isBye()) {
+        if(i == bracketService.calculateRoundCount() - 1){
+          contestants.push("WINNER TBD");
+        } else if (matchups[x].isBye()) {
           if (matchups[x].getContestant1()) {
             contestants.push(matchups[x].getContestant1()!.getName());
             contestants.push("BYE ROUND");

@@ -70,13 +70,13 @@ body {
   top: 50%;
 }
 .bracket:first-of-type {
-  .team-item:before {
+  .contestant-item:before {
 display: none;
   }
 }
 .bracket:last-of-type {
-  .team-item:before,
-  .team-item:after {
+  .contestant-item:before,
+  .contestant-item:after {
 display: none;
   }
 }
@@ -113,7 +113,7 @@ display: none;
     <div class="tournament-container" id="bracket-container">
     <!-- Loop through each round -->
         
-            <ul *ngFor="let round of rounds" class="bracket">
+            <ul *ngFor="let round of rounds" class="bracket" id="{{ round.name }}">
                 <!--<h3>{{ round.name }}</h3>-->
                 <li *ngFor="let matchup of round.matchups"  class="contestant-item">
                     {{ matchup }}
