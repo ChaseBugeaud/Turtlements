@@ -20,7 +20,7 @@ export class LoginService {
   }
 
   login(credentials: { username: string; password: string }): Observable<any> {
-    return this.http.post(this.apiUrl + '/logintest', credentials);
+    return this.http.post(this.apiUrl + '/login', credentials);
   }
 
 }
