@@ -29,8 +29,10 @@ export class BracketService {
   public calculateByes(): number {
     if (this.numContestants < 2) throw new Error("InsufficientContestants");
     if (this.ceilPowerOf2() === this.numContestants) {
+      //if the number of contestants are a power of 2, no byes needed
       return 0;
     } else {
+      //if the number of contestants aren't a power of 2, byes are calculated
       return this.ceilPowerOf2() - this.numContestants;
     }
   }
@@ -60,35 +62,62 @@ export class BracketService {
     }
   }
 
+  public calculateRoundCount(): number {
+    if (this.contestants.length < 2) throw new Error("InsufficientContestants");
+
+    return Math.log2(this.ceilPowerOf2()) + 1;
+  }
+
   public createFirstRoundMatchups(): Matchup[] {
     if (this.numContestants < 2) throw new Error("InsufficientContestants");
     let firstRoundMatchups: Matchup[] = [];
     let contestantsCopy: Contestant[] = JSON.parse(JSON.stringify(this.contestants));
     let byeCount: number = this.calculateByes();
-    let firstRoundMatchupCount: number = this.calculateFirstRoundMatchupCount();
     let byeMatchups: Matchup[] = [];
 
     //calculate bye matchups
     for (let i = 0; i < byeCount; i++) {
       let contestant: Contestant | undefined = contestantsCopy.shift();
-      let matchup: Matchup = new Matchup(1, this.matchupSpot, contestant);
+      let matchup: Matchup = new Matchup(1, this.matchupSpot++, contestant);
       byeMatchups.push(matchup);
-      this.matchupSpot++;
     }
     firstRoundMatchups.push(...byeMatchups);
     //create real first round matchups
     for (let i = 0; i < contestantsCopy.length; i += 2) {
       let contestant1: Contestant | undefined = contestantsCopy[i];
       let contestant2: Contestant | undefined = contestantsCopy[i + 1];
-
-      let matchup: Matchup = new Matchup(1, this.matchupSpot, contestant1, contestant2);
-      this.matchupSpot++;
+      let matchup: Matchup = new Matchup(1, this.matchupSpot++, contestant1, contestant2);
       firstRoundMatchups.push(matchup);
     }
     return firstRoundMatchups;
   }
 
-  public createUnsortedBracket(): void {
+  public createSkeletonBracket(): Matchup[][] {
+    let returnBracket: Matchup[][] = [];
+    returnBracket.push(this.createFirstRoundMatchups());
+    const MAX_ROUNDS: number = this.calculateRoundCount();
+    for (let round = 1; round < MAX_ROUNDS - 1; round++) {
+      returnBracket[round] = [];
+      for (let i = 0; i < returnBracket[round - 1].length; i += 2) {
+        let newMatchup: Matchup = new Matchup(1, this.matchupSpot++);
 
+        //account for bye rounds - they only happen on first round
+        if (returnBracket[round - 1][i].isBye()) {
+          newMatchup.setContestant1(returnBracket[round - 1][i].getContestant1()!);
+        }
+        if (returnBracket[round - 1][i + 1] && returnBracket[round - 1][i + 1].isBye()) {
+          newMatchup.setContestant2(returnBracket[round - 1][i + 1].getContestant1()!);
+        }
+        returnBracket[round - 1][i].setParent(newMatchup);
+        returnBracket[round - 1][i + 1].setParent(newMatchup);
+        returnBracket[round].push(newMatchup);
+      }
+    }
+
+    //create winner matchup and assign it as a parent to the last matchup
+    let winner: Matchup = new Matchup(1, this.matchupSpot++);
+    returnBracket[returnBracket.length - 1][0].setParent(winner);
+    returnBracket.push([winner]);
+    return returnBracket;
   }
 }

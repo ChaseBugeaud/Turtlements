@@ -11,4 +11,3 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent}
 
 ];
-console.log('Registered Routes:', routes);

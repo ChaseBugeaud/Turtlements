@@ -3,6 +3,7 @@ import { Contestant } from '../../classes/Contestant';
 import { Tournament } from '../../classes/Tournament';
 import { NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { BracketService } from '../../services/bracket-service.service';
 
 
 @Component({
@@ -19,19 +20,20 @@ export class TournamentComponent {
     this.startDate = new Date();
     this.tournament = new Tournament("asdf", "description", [], this.startDate);
   }
+
   addContestantToTournament(name: string): void {
     //checks for required field
-    if(this.isFilledOut(name)){
+    if (this.isFilledOut(name)) {
       let contestant: Contestant = new Contestant(name);
       this.tournament.addContestant(contestant);
-    }else{
+    } else {
       console.log("missing fields");
     }
   }
 
-  isFilledOut(parameter: any): boolean{
+  isFilledOut(parameter: any): boolean {
     //checks if field is empty
-    if(parameter == null || parameter === ''){
+    if (parameter == null || parameter === '') {
       return false;
     }
     return true;
@@ -39,15 +41,17 @@ export class TournamentComponent {
 
   addDetailsToTournament(title: string, desc: string, prize: string, start: Date, end: Date): void {
     //checks for required fields and mininum of 2 contestants
-    if(this.isFilledOut(title) && this.isFilledOut(desc) && this.isFilledOut(start) && this.tournament.getContestants().length >= 2) {
+    if (this.isFilledOut(title) && this.isFilledOut(desc) && this.isFilledOut(start) && this.tournament.getContestants().length >= 2) {
       this.tournament.setName(title);
       this.tournament.setDescription(desc);
       this.tournament.setPrize(prize);
       this.tournament.setStartDate(start);
       this.tournament.setEndDate(end);
 
+      let bracketService: BracketService = new BracketService(this.tournament);
+      this.tournament.setBracket(bracketService.createSkeletonBracket());
       console.log(this.tournament);
-    }else{
+    } else {
       //else error message is displayed
       console.log("missing fields");
     }
